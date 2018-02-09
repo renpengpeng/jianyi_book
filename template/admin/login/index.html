@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>管理员登录</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,mininum-scale=1.0,maxinum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="http://{$_SERVER['HTTP_HOST']}/static/style/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="http://{$_SERVER['HTTP_HOST']}/static/style/admin.css">
+	<script type="text/javascript" src="http://{$_SERVER['HTTP_HOST']}/static/style/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="http://{$_SERVER['HTTP_HOST']}/static/style/jquery.cookie.js"></script>
+	<script type="text/javascript" src="http://{$_SERVER['HTTP_HOST']}/static/style/admin.js"></script>
+</head>
+<body>
+<div class="container-fluid login-bg">
+	<div class="container">
+		<!-- 登录面板 -->
+		<div class="panel login-panel">
+			<div class="panel-body">
+				<form action="{:url('admin/login/check')}" method="post" onsubmit="return adminLoginCheck($(this))">
+					<div class="form-group">
+						<label>用户名:</label>
+						<input type="text" name="username" class="form-control">
+					</div>
+					<div class="form-group">
+						<label>密码：</label>
+						<input type="text" name="password" class="form-control">
+					</div>
+					<div class="form-group">
+						<input type="submit" value="登录" class="btn btn-default">
+					</div>
+				</form>
+				<div class="alert login-alert">我是提示信息</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

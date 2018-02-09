@@ -1,0 +1,55 @@
+{include file="../template/index/base/header.html"}
+<div class="container">
+	<div class="panel panel-default" style="width: 50%;margin:0 auto;">
+		<div class="panel-body">
+			<h3>注册</h3>
+			<span style="float: right;"><a href="{:url('index/login/index')}">已有账号？去登陆</a></span>
+			<form action="{:url('index/login/reg_check')}" method="post" onsubmit="return indexRegCheck($(this))">
+				<div class="form-group">
+				<label>用户名(英文数字组合)</label>
+				<input type="text" name="username" class="form-control" placeholder="5-15位字母与数字的组合">
+				</div>
+				<div class="form-group">
+					<label>中文名称</label>
+					<input type="text" name="bbsname" class="form-control" placeholder="3-15位中文">
+				</div>
+				<div class="form-group">
+					<label>设置密码</label>
+					<input type="password" name="password" class="form-control" placeholder="3-15位字母与数字的组合">
+				</div>
+				<div class="form-group">
+					<label>再次输入密码</label>
+					<input type="password" name="password-1" class="form-control" placeholder="再次输入密码">
+				</div>
+				<div class="form-group">
+					<label>性别：</label>
+					<label class="radio-inline">
+						<input type="radio" name="sex" value="0" checked>保密
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="sex" value="1">男
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="sex" value="2">女
+					</label>
+				</div>
+				<div class="form-group">
+					<label>邮箱</label>
+					<input type="email" name="email" class="form-control" placeholder="请规范输入邮箱">
+				</div>
+				<div class="form-inline">
+					<input type="text" name="email-yzm" class="form-control" placeholder="请输入6位验证码">
+					<span class="btn btn-default" id="reg-send-mail">发送验证码</span><br>
+				</div><br>
+				<div class="form-group">
+					<input type="submit" value="注册" class="btn btn-default">
+				</div>
+			</form>
+			
+			<div class="form-group">
+				<div class="alert alert-danger reg-alert">这里是提示</div>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="../template/index/base/footer.html"}

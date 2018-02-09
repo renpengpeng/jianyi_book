@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,mininum-scale=1,maxinum-scale=1">
+	<title>简易书城</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<link rel="stylesheet" type="text/css" href="http://{$_SERVER['HTTP_HOST']}/static/style/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="http://{$_SERVER['HTTP_HOST']}/static/style/index.css">
+ </head>
+<body>
+<!-- 
+	*	全站顶部小导航栏 功能：
+	* 	收藏站点
+	* 	加入首页
+
+	*	登录
+	*	注册
+	*	购物车
+ -->
+ <div class="container-fluid common-nav-top">
+ 	<div class="common-nav-top-left">
+ 		<a href="#">设为首页</a>
+ 		<a href="#">收藏本站</a>
+ 	</div>
+ 	<div class="common-nav-top-right">
+ 		{if condition="$Think.session.user_id neq null"}
+ 			<a href="{:url('index/user/order')}">我的订单</a>
+ 			<a href="{:url('index/login/login_out')}">退出登录</a>
+ 		{else /}
+ 			<a href="{:url('index/login/index')}">登录</a>
+ 			<a href="{:url('index/login/reg')}">注册</a>
+ 		{/if}
+ 		
+ 	</div>
+ </div>
+<!-- 
+	*	全站顶部logo模块
+	*	LOGO
+	*	搜索
+	*	我的购物车等用户信息
+ -->
+ <div class="container-fluid common-nav-logo">
+ 	<!-- logo -->
+ 	<div class="col-md-4 common-nav-logo-logo">
+ 		<a href="http://{$_SERVER['HTTP_HOST']}">
+ 			<img src="http://demo.haidao.la/template/default/statics/images/logo.png">
+ 		</a>
+ 	</div>
+ 	<!-- 搜索框 -->
+ 	<div class="col-md-4 common-nav-logo-sousuo">
+ 		<input type="text" name="index-so" class="common-nav-logo-sousuo-input">
+ 		<button class="common-nav-logo-sousuo-button">搜索</button>
+ 	</div>
+ 	<!-- 用户信息 -->
+ 	<div class="col-md-4 common-nav-logo-user">
+ 		<li>
+ 			<a href="{:url('index/user/index')}">
+ 				会员中心
+ 			</a>
+ 			</li>
+ 		<li>
+ 			<a href="{:url('index/user/cart')}">
+ 				购物车
+ 			</a>
+ 		</li>
+ 	</div>
+ </div>
+<!-- 
+	*	全部商品分类
+	*	所有分类类别
+-->
+<div class="container-fluid common-nav-class">
+	<div class="container common-nav-class-title">
+		全部商品分类 >
+	</div>
+</div>

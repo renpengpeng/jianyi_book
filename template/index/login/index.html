@@ -1,0 +1,36 @@
+{include file="../template/index/base/header.html"}
+<div class="container">
+	<div class="panel panel-default" style="width: 50%;margin: 0 auto;margin-top: 10px;">
+		<div class="panel-body">
+			<!-- 提示信息 -->
+				
+				<h3>登录</h3>
+				<span style="float: right;"><a href="{:url('index/login/reg')}">没有账号？去注册</a></span>
+			<form action="{:url('index/login/login_check')}" method="post" onsubmit="return indexLoginCheck($(this))">
+				<div class="form-group">
+				<label>用户名/邮箱/手机号：</label>
+				<input type="text" name="username" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>密码：</label>
+					<input type="password" name="password" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>验证码：</label>
+					<input type="text" name="yzm" class="form-control">
+				</div>
+				<div class="form-group">
+					<img src="{:captcha_src()}" onclick="this.src='{:captcha_src()}'">
+				</div>
+				<div class="form-group">
+					<input type="submit" value="登录" class="btn btn-default">
+					<span style="float: right;"><a href="">找回密码</a></span>
+				</div>
+				<div class="alert alert-danger login-alert">
+					提示框
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{include file="../template/index/base/footer.html"}

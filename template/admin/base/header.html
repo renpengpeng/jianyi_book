@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>管理员后台</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" type="text/css" href="http://{$_SERVER['HTTP_HOST']}/static/style/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="http://{$_SERVER['HTTP_HOST']}/static/style/admin.css">
+	<script type="text/javascript" src="http://{$_SERVER['HTTP_HOST']}/static/style/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="http://{$_SERVER['HTTP_HOST']}/static/style/jquery.cookie.js"></script>
+	<script type="text/javascript" src="http://{$_SERVER['HTTP_HOST']}/static/style/admin.js"></script>
+</head>
+<body>
+	<!-- 顶部 -->
+<div class="container-fluid admin-top">
+	<div class="admin-top-logo">
+		管理员后台
+	</div>
+	<!-- 用户信息 -->
+	<div class="admin-top-nav">
+		<ul>
+			<li>
+				<a href="{:url('admin/user/info')}">
+					你好，{$Think.session.admin_id.bbsname}
+				</a>
+			</li>
+			<li>
+				<a href="{:url('admin/user/modify_info')}">
+					修改个人信息
+				</a>
+			</li>
+			<li>
+				<a href="{:url('admin/index/go_out')}">
+					退出登录
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
