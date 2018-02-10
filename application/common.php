@@ -73,3 +73,117 @@ function sendMail($sendName,$sendMail,$sendTitle,$sendContent,$addUser){
 	}
 	
 }
+/*
+	*	获取所有的分类 array显示
+*/
+function adminGetCateForArray($pid=0){
+
+	// 开始获取
+	$result 	=	Model('BookCates')->where('pid',$pid)->select()->toArray();
+
+	foreach ($result as $key => $value) {
+		// 查询分类下的数量
+		$cateNum	=	Model('BookCates')->where('pid',$result[$key]['cate_id'])->count();
+
+		if($cateNum > 0){
+			$result[$key] 	+=	Model('BookCates')->where('pid',$result[$key]['cate_id'])->select()->toArray();
+		}
+
+	}
+
+	$pid++;
+	// 再次统计
+	$tj	=	Model('BookCates')->where('pid',$pid)->count();
+
+	if($tj > 0){
+		adminGetCateForArray($tj);
+	}
+
+	return $result;
+}
+/*
+	*	获取所有分类li显示
+*/
+function adminGetCateForLi($pid=0){
+
+	$result = '<ul>';
+
+	// 开始获取
+	$oneGet	=	Model('BookCates')->where('pid',$pid)->select()->toArray();
+
+	foreach ($oneGet as $key => $value) {
+		$result .= '<li class="list-group-item">';
+		// 设置result 
+		$result .= str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $oneGet[$key]['garden']).$oneGet[$key]['cate_name'];
+		$result	.=	'<span class="badge">'.$oneGet[$key]["garden"].'</span>';
+
+
+		// 如果查询分类数量
+		$ziNum	=	Model('BookCates')->where('pid',$oneGet[$key]['cate_id'])->count();
+
+		if($ziNum > 0){
+			// 查询ID
+			$geID	=	Model('BookCates')->where('pid',$oneGet[$key]['cate_id'])->select()->toArray();
+
+			// 遍历
+			foreach ($geID as $k => $v) {
+				$result	.=	'<li class="list-group-item">';
+				$result .=	str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $geID[$key]['garden']).$geID[$k]['cate_name'];
+				$result	.=	'<span class="badge">'.$geID[$key]["garden"].'</span>';
+				$result	.=	'</li>';
+				$result .=	adminGetCateForLi($geID[$k]['cate_id']);
+			}
+		}
+		$result .= '</li>';
+	}
+	$result .= '</ul>';
+
+	return $result;
+}
+/*
+	*	option
+*/
+function adminGetCateForOption($pid=0){
+
+	$result = '';
+
+	// 开始获取
+	$oneGet	=	Model('BookCates')->where('pid',$pid)->select()->toArray();
+
+	foreach ($oneGet as $key => $value) {
+		$result .= '<option value="'.$oneGet[$key]['cate_id'].'">';
+		// 设置result 
+		$result .= str_repeat('|——', $oneGet[$key]['garden']).'&nbsp;&nbsp;'.$oneGet[$key]['cate_name'];
+
+
+		// 如果查询分类数量
+		$ziNum	=	Model('BookCates')->where('pid',$oneGet[$key]['cate_id'])->count();
+
+		if($ziNum > 0){
+			// 查询ID
+			$geID	=	Model('BookCates')->where('pid',$oneGet[$key]['cate_id'])->select()->toArray();
+
+			// 遍历
+			foreach ($geID as $k => $v) {
+				$result .= '<option value="'.$geID[$key]['cate_id'].'">';
+				$result .=	str_repeat('|——', $geID[$key]['garden']).'&nbsp;&nbsp;'.$geID[$k]['cate_name'];
+				$result	.=	'</option>';
+				$result .=	adminGetCateForLi($geID[$k]['cate_id']);
+			}
+		}
+		$result .= '</option>';
+	}
+
+	return $result;
+}
+
+/*
+	*	获取系统参数
+	*	getSetting()
+*/
+function getSetting(){
+	// 调用模型
+	$result = Model('BookSetting')->get(1)->toArray();
+
+	return $result;
+}

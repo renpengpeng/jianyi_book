@@ -4,7 +4,119 @@
 	{include file="../template/admin/base/sidebar.html"}
 	<div class="col-md-10">
 		<div class="admin-box-title">发布商品</div>
-		
+		<div class="admin-box-create-commodity">
+			<form action="" method="">
+				<!-- 主图 -->
+				<div class="form-group">
+					<label>主图</label><br>
+					<div class="create-commodity-pic">
+						<input type="file" name="pic-1" onchange="createPic(this)" class="create-upload-pic-box">
+					</div>
+					<div class="create-commodity-pic">
+						<input type="file" name="pic-2" onchange="createPic(this)" class="create-upload-pic-box">
+					</div>
+					<div class="create-commodity-pic">
+						<input type="file" name="pic-2" onchange="createPic(this)" class="create-upload-pic-box">
+					</div>
+					<div class="create-commodity-pic">
+						<input type="file" name="pic-2" onchange="createPic(this)" class="create-upload-pic-box">
+					</div>
+					<div class="create-commodity-pic">
+						<input type="file" name="pic-2" onchange="createPic(this)" class="create-upload-pic-box">
+					</div>
+				</div>
+				<!-- 商品分类 -->
+				<div class="form-group">
+					<label>商品分类：</label>
+					<select name="shop-cate" class="form-control">
+						<option value="0">顶级分类</option>
+						{$allCate}
+					</select>
+				</div>
+				<!-- 商品标题 -->
+				<div class="form-group">
+					<label>商品标题：</label>
+					<input type="text" name="shop-title" class="form-control">
+				</div>
+				<div class="form-inline">
+					<label>定价：</label>
+					<input type="text" name="shop-pricing" class="form-control" placeholder="人民币">
+					<label>售价：</label>
+					<input type="text" name="shop-price" class="form-control" placeholder="人民币">
+				</div><br>
+				<div class="form-inline">
+					<label>ISBN:</label>
+					<input type="text" name="shop-isbn" class="form-control">
+					<label>语种：</label>
+					<select name="shop-language" class="form-control">
+						<option value="chinese">中文</option>
+						<option value="english">英语</option>
+						<option value="french">法语</option>
+						<option value="german">德语</option>
+					</select>
+					<label>作者：</label>
+					<input type="text" name="shop-author" class="form-control">
+				</div><br>
+				<div class="form-inline">
+					<label>出版社：</label>
+					<input type="text" name="shop-press" class="form-control">
+					<label>出版日期：</label>
+					<input type="text" name="shop-press-date-year" class="form-control">
+					<label>年</label>
+					<input type="text" name="shop-press-date-month" class="form-control">
+					<label>月</label>
+					<input type="text" name="shop-press-date-day" class="form-control">
+					<label>日</label>
+				</div><br>
+				<div class="form-inline">
+					<label>印刷次数：</label>
+					<input type="text" name="shop-print-number" class="form-control">
+					<label>版次：</label>
+					<input type="text" name="shop-edition" class="form-control">
+					<label>读者对象：</label>
+					<select name="shop-reader" class="form-control">
+						<option value="0">不选择</option>
+						<option value="ertong">儿童</option>
+						<option value="qingnian">青年</option>
+						<option value="gaoxiao">高校</option>
+						<option value="shaonian">少年</option>
+						<option value="funv">妇女</option>
+						<option value="laoren">老人</option>
+						<option value="gongren">工人</option>
+						<option value="nongming">农民</option>
+						<option value="ganbu">干部</option>
+						<option value="zhishifenzi">知识分子</option>
+						<option value="junren">军人</option>
+					</select>
+				</div><br>
+				<div class="form-inline">
+					<label>印刷日期：</label>
+					<input type="text" name="shop-print-number-date-year" class="form-control">
+					<label>年</label>
+					<input type="text" name="shop-print-number-date-month" class="form-control">
+					<label>月</label>
+					<input type="text" name="shop-print-number-date-day" class="form-control">
+					<label>日</label>
+				</div><br>
+				<div class="form-inline">
+					<label>字数：</label>
+					<input type="text" name="shop-word-count" class="form-control">
+					<label>页数：</label>
+					<input type="text" name="shop-page-count" class="form-control">
+					<label>装帧：</label>
+					<input type="text" name="shop-binging" class="form-control">
+				</div><br>
+				<div class="form-inline">
+					<label>开本：</label>
+					<input type="text" name="shop-format" class="form-control">
+					<label>库存：</label>
+					<input type="text" name="shop-stock" class="form-control">
+				</div><br>
+				<div class="form-group">
+					<label>商品详情：</label>
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
 </body>
