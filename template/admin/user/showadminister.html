@@ -1,0 +1,71 @@
+{include file="../template/admin/base/header.html"}
+<!-- 内容区 -->
+<div class="container-fluid admin-box">
+	{include file="../template/admin/base/sidebar.html"}
+	<div class="col-md-10">
+		<div class="admin-box-title">管理信息展示[ID：
+				{$message.admin_id}
+		]&nbsp;-&nbsp;
+		<a href="{:url('admin/user/edit',['type'=>$type,'id'=>$message.admin_id])}" class="btn btn-default">编辑</a>
+	</div>
+		<div class="alert alert-warning tip-alert"></div>
+		<table class="table table-bordered">
+			<tr>
+				<td>管理ID</td>
+				<td>{$message.admin_id}</td>
+			</tr>
+			<tr>
+				<td>用户名</td>
+				<td>{$message.username}</td>
+			</tr>
+			<tr>
+				<td>昵称</td>
+				<td>{$message.bbsname}</td>
+			</tr>
+			<tr>
+				<td>密码(密文)</td>
+				<td>{$message.password}</td>
+			</tr>
+			<tr>
+				<td>权限</td>
+				<td>
+					{if $message.permissions eq 0}
+						超级管理员
+					{elseif $message.permissions eq 1}
+						副超级管理员
+					{elseif $message.permissions eq 2}
+						运营团队
+					{else / }
+						无法识别
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<td>状态</td>
+				<td>
+				{if $message.status eq 0}
+					锁定
+				{else /}
+					正常
+				{/if}
+				</td>
+			</tr>
+			<tr>
+				<td>创建时间</td>
+				<td>
+					{$message.create_time}
+				</td>
+			</tr>
+			<tr>
+				<td>最后登录时间</td>
+				<td>{$message.last_time}</td>
+			</tr>
+			<tr>
+				<td>最后登录IP</td>
+				<td>{$message.last_ip}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>

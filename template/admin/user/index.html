@@ -1,0 +1,83 @@
+{include file="../template/admin/base/header.html"}
+<!-- 内容区 -->
+<div class="container-fluid admin-box">
+	{include file="../template/admin/base/sidebar.html"}
+	<div class="col-md-10">
+		<div class="admin-box-title">全部用户管理[当前：
+			{if $type eq 'user' AND $status eq 0}
+				被锁定的用户
+			{/if}
+			{if $type eq 'user' AND $status eq 1}
+				状态正常的用户
+			{/if}
+			{if $type eq 'administer' AND $status eq 0}
+				被锁定的管理员
+			{/if}
+			{if $type eq 'administer' AND $status eq 1}
+				状态正常的管理员
+			{/if}
+		][切换状态：
+			<a href="{:url('admin/user/index',['type'=>'user','status'=>0])}">被锁定的用户</a>
+			<a href="{:url('admin/user/index',['type'=>'user','status'=>1])}">正常的用户</a>
+			<a href="{:url('admin/user/index',['type'=>'administer','status'=>0])}">被锁定的管理员</a>
+			<a href="{:url('admin/user/index',['type'=>'administer','status'=>1])}">正常的管理员</a>
+		]</div>
+		<div class="alert alert-warning tip-alert"></div>
+		<table class="table table-bordered">
+			<tr>
+				<th>ID</th>
+				<th>用户名</th>
+				<th>昵称</th>
+				<th>状态</th>
+				<th>操作</th>
+			</tr>
+			<tr>
+				{volist name="userArr" id="userArr"}
+				<td>
+					{if $type eq 'user'}
+						{$userArr.user_id}
+					{else /}
+						{$userArr.admin_id}
+					{/if}
+				</td>
+				<td>
+					{$userArr.username}
+				</td>
+				<td>
+					{$userArr.bbsname}
+				</td>
+				<td>
+					{if $userArr.status eq 0}
+						锁定
+					{else /}
+						正常
+					{/if}
+				</td>
+				<td>
+					{if $userArr.status eq 0}
+						{if $type eq 'user'}
+							<span class="btn btn-sm btn-success" onclick="buttonHref($(this));" href="{:url('admin/user/status',['type'=>$type,'id'=>$userArr.user_id])}">解除锁定</span>
+						{else /}
+							<span class="btn btn-sm btn-success" onclick="buttonHref($(this));" href="{:url('admin/user/status',['type'=>$type,'id'=>$userArr.admin_id])}">解除锁定</span>
+						{/if}
+					{else /}
+						{if $type eq 'user'}
+							<span class="btn btn-sm btn-danger" onclick="buttonHref($(this));" href="{:url('admin/user/status',['type'=>$type,'id'=>$userArr.user_id])}">锁定用户</span>
+						{else /}
+							<span class="btn btn-sm btn-danger" onclick="buttonHref($(this));" href="{:url('admin/user/status',['type'=>$type,'id'=>$userArr.admin_id])}">锁定用户</span>
+						{/if}
+					{/if}
+					<span class="btn btn-sm btn-warning">修改信息</span>
+					{if $type eq 'user'}
+						<a href="{:url('admin/user/show',['type'=>$type,'id'=>$userArr.user_id])}" class="btn btn-sm btn-default">查看详细</a>
+					{else /}
+						<a href="{:url('admin/user/show',['type'=>$type,'id'=>$userArr.admin_id])}" class="btn btn-sm btn-default">查看详细</a>
+					{/if}
+				</td>
+				{/volist}
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>

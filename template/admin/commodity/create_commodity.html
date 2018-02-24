@@ -5,24 +5,24 @@
 	<div class="col-md-10">
 		<div class="admin-box-title">发布商品</div>
 		<div class="admin-box-create-commodity">
-			<form action="" method="">
+			<form action="{:url('admin/commodity/new_shop')}" method="post" onsubmit="return AddShopForm($(this))">
 				<!-- 主图 -->
 				<div class="form-group">
 					<label>主图</label><br>
 					<div class="create-commodity-pic">
-						<input type="file" name="pic-1" onchange="createPic(this)" class="create-upload-pic-box">
+						<input type="file" name="pic-1" onchange="createPic(this)" class="create-upload-pic-box" accept="image/gif, image/jpeg, image/png, image/jpg">
 					</div>
 					<div class="create-commodity-pic">
-						<input type="file" name="pic-2" onchange="createPic(this)" class="create-upload-pic-box">
+						<input type="file" name="pic-2" onchange="createPic(this)" class="create-upload-pic-box" accept="image/gif, image/jpeg, image/png, image/jpg">
 					</div>
 					<div class="create-commodity-pic">
-						<input type="file" name="pic-2" onchange="createPic(this)" class="create-upload-pic-box">
+						<input type="file" name="pic-3" onchange="createPic(this)" class="create-upload-pic-box" accept="image/gif, image/jpeg, image/png, image/jpg">
 					</div>
 					<div class="create-commodity-pic">
-						<input type="file" name="pic-2" onchange="createPic(this)" class="create-upload-pic-box">
+						<input type="file" name="pic-4" onchange="createPic(this)" class="create-upload-pic-box" accept="image/gif, image/jpeg, image/png, image/jpg">
 					</div>
 					<div class="create-commodity-pic">
-						<input type="file" name="pic-2" onchange="createPic(this)" class="create-upload-pic-box">
+						<input type="file" name="pic-5" onchange="createPic(this)" class="create-upload-pic-box" accept="image/gif, image/jpeg, image/png, image/jpg">
 					</div>
 				</div>
 				<!-- 商品分类 -->
@@ -54,12 +54,14 @@
 						<option value="french">法语</option>
 						<option value="german">德语</option>
 					</select>
-					<label>作者：</label>
-					<input type="text" name="shop-author" class="form-control">
 				</div><br>
 				<div class="form-inline">
 					<label>出版社：</label>
 					<input type="text" name="shop-press" class="form-control">
+					<label>作者：</label>
+					<input type="text" name="shop-author" class="form-control">
+				</div><br>
+				<div class="form-inline">
 					<label>出版日期：</label>
 					<input type="text" name="shop-press-date-year" class="form-control">
 					<label>年</label>
@@ -104,20 +106,34 @@
 					<label>页数：</label>
 					<input type="text" name="shop-page-count" class="form-control">
 					<label>装帧：</label>
-					<input type="text" name="shop-binging" class="form-control">
+					<input type="text" name="shop-binding" class="form-control">
 				</div><br>
 				<div class="form-inline">
 					<label>开本：</label>
 					<input type="text" name="shop-format" class="form-control">
 					<label>库存：</label>
 					<input type="text" name="shop-stock" class="form-control">
+					<label>运费：</label>
+					<input type="text" name="shop-costs" class="form-control" value="0">
 				</div><br>
 				<div class="form-group">
 					<label>商品详情：</label>
+					<div id="shop-details"></div>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="添加商品" class="btn btn-success" id="create-btn">
 				</div>
 			</form>
 		</div>
+		<div class="alert alert-warning" style="display: none;"></div>
 	</div>
 </div>
+<script type="text/javascript">
+		// 初始化wangEdit
+		var E = window.wangEditor
+		var editor2 = new E('#shop-details')
+		editor2.create()
+
+</script>
 </body>
 </html>

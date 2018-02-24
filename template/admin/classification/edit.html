@@ -1,0 +1,33 @@
+{include file="../template/admin/base/header.html"}
+<!-- 内容区 -->
+<div class="container-fluid admin-box">
+	{include file="../template/admin/base/sidebar.html"}
+	<div class="col-md-10">
+		<div class="admin-box-title">分类编辑 - [{$cateInfo.cate_name}] - <button onclick="window.history.go(-1)" class="btn btn-default">取消编辑</button></div>
+		<!-- 商品分类 -->
+		<div class="col-md-10">
+			<form action="{:url('admin/classification/edit_admin')}" method="post" onsubmit="return EditCateForm($(this));">
+				<!-- 隐藏域 id -->
+				<input type="hidden" name="cate-id" value="{$cateInfo.cate_id}">
+				<div class="group-group">
+					<label>上级分类：</label>
+					<select name="last-cate" class="form-control">
+						<option value="0">不更改</option>
+						{$cateOption}
+					</select>
+				</div>
+				<div class="form-group">
+					<label>分类名称：</label>
+					<input type="text" name="cate-name" class="form-control" value="{$cateInfo.cate_name}">
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-success" value="修改">
+				</div>
+			</form>
+			<!-- alert提示框 -->
+			<div class="alert alert-warning editCate-alert">提示</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

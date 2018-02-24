@@ -109,27 +109,36 @@ function adminGetCateForLi($pid=0){
 	$result = '<ul>';
 
 	// 开始获取
-	$oneGet	=	Model('BookCates')->where('pid',$pid)->select()->toArray();
+	$oneGet	=	Model('BookCates')->where('pid',$pid)->order('cate_id asc')->select()->toArray();
 
 	foreach ($oneGet as $key => $value) {
 		$result .= '<li class="list-group-item">';
 		// 设置result 
-		$result .= str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $oneGet[$key]['garden']).$oneGet[$key]['cate_name'];
-		$result	.=	'<span class="badge">'.$oneGet[$key]["garden"].'</span>';
-
+		$result .=	str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $oneGet[$key]['garden']).$oneGet[$key]['cate_name'];
+		$result	.=	'<span class="btn btn-sm btn-danger" style="float:right;margin-left:10px;">';
+		$result	.=	'<a href="'.url('admin/classification/del',['id'=>$oneGet[$key]['cate_id']]).'" onclick="return hrefMsg($(this))">删除</a>';
+		$result	.=	'</span>';
+		$result	.=	'<span class="btn btn-sm btn-success" style="float:right;">';
+		$result	.=	'<a href="'.url('admin/classification/edit',['id'=>$oneGet[$key]['cate_id']]).'">编辑</a>';
+		$result	.=	'</span>';
 
 		// 如果查询分类数量
 		$ziNum	=	Model('BookCates')->where('pid',$oneGet[$key]['cate_id'])->count();
 
 		if($ziNum > 0){
 			// 查询ID
-			$geID	=	Model('BookCates')->where('pid',$oneGet[$key]['cate_id'])->select()->toArray();
+			$geID	=	Model('BookCates')->where('pid',$oneGet[$key]['cate_id'])->order('cate_id asc')->select()->toArray();
 
 			// 遍历
 			foreach ($geID as $k => $v) {
 				$result	.=	'<li class="list-group-item">';
-				$result .=	str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $geID[$key]['garden']).$geID[$k]['cate_name'];
-				$result	.=	'<span class="badge">'.$geID[$key]["garden"].'</span>';
+				$result .=	str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $geID[$k]['garden']).$geID[$k]['cate_name'];
+				$result	.=	'<span class="btn btn-sm btn-danger" style="float:right;margin-left:10px;">';
+				$result	.=	'<a href="'.url('admin/classification/del',['id'=>$geID[$k]['cate_id']]).'" onclick="return hrefMsg($(this))">删除</a>';
+				$result	.=	'</span>';
+				$result	.=	'<span class="btn btn-sm btn-success" style="float:right;">';
+				$result	.=	'<a href="'.url('admin/classification/edit',['id'=>$geID[$k]['cate_id']]).'">编辑</a>';
+				$result	.=	'</span>';
 				$result	.=	'</li>';
 				$result .=	adminGetCateForLi($geID[$k]['cate_id']);
 			}
@@ -148,7 +157,7 @@ function adminGetCateForOption($pid=0){
 	$result = '';
 
 	// 开始获取
-	$oneGet	=	Model('BookCates')->where('pid',$pid)->select()->toArray();
+	$oneGet	=	Model('BookCates')->where('pid',$pid)->order('cate_id asc')->select()->toArray();
 
 	foreach ($oneGet as $key => $value) {
 		$result .= '<option value="'.$oneGet[$key]['cate_id'].'">';
@@ -161,20 +170,49 @@ function adminGetCateForOption($pid=0){
 
 		if($ziNum > 0){
 			// 查询ID
-			$geID	=	Model('BookCates')->where('pid',$oneGet[$key]['cate_id'])->select()->toArray();
+			$geID	=	Model('BookCates')->where('pid',$oneGet[$key]['cate_id'])->order('cate_id asc')->select()->toArray();
 
 			// 遍历
 			foreach ($geID as $k => $v) {
-				$result .= '<option value="'.$geID[$key]['cate_id'].'">';
-				$result .=	str_repeat('|——', $geID[$key]['garden']).'&nbsp;&nbsp;'.$geID[$k]['cate_name'];
+				$result .= '<option value="'.$geID[$k]['cate_id'].'">';
+				$result .=	str_repeat('|——', $geID[$k]['garden']).'&nbsp;&nbsp;'.$geID[$k]['cate_name'];
 				$result	.=	'</option>';
-				$result .=	adminGetCateForLi($geID[$k]['cate_id']);
+				$result .=	adminGetCateForOption($geID[$k]['cate_id']);
 			}
 		}
 		$result .= '</option>';
 	}
 
 	return $result;
+}
+
+/*
+	*	遍历某个分类下的所有分类个数
+*/
+function getCateNextAll($id){
+
+	$result		=	[$id];
+
+	// 获取 pid为$id 的所有分类
+	$oneNext	=	Model('BookCates')->where('pid',$id)->order('cate_id asc')->select()->toArray();
+
+	if(!$oneNext){
+		return false;
+	}
+
+	// 遍历 把id放到$result 里面
+	foreach ($oneNext as $key => $value) {
+		$ids		=	$oneNext[$key]['cate_id'];
+		$result[]	=	$ids;
+
+		// 查询是否有pid为此分类的分类
+		$count		=	Model('BookCates')->where('pid',$ids)->order('cate_id asc')->count();
+		if($count >= 1){
+			$result += array_merge($result,getCateNextAll($ids));
+		}	
+	}
+
+	return array_values(array_unique($result));
 }
 
 /*

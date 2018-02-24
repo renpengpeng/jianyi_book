@@ -1,0 +1,108 @@
+{include file="../template/admin/base/header.html"}
+<!-- 内容区 -->
+<div class="container-fluid admin-box">
+	{include file="../template/admin/base/sidebar.html"}
+	<div class="col-md-10">
+		<div class="admin-box-title">用户信息展示[ID：
+				{$message.user_id}
+		]&nbsp;-&nbsp;
+		<a href="{:url('admin/user/edit',['type'=>$type,'id'=>$message.user_id])}" class="btn btn-default">编辑</a>
+		
+	</div>
+		<div class="alert alert-warning tip-alert"></div>
+		<table class="table table-bordered">
+			<tr>
+				<td>头像地址</td>
+				<td>{$message.head_pic}</td>
+			</tr>
+			<tr>
+				<td>用户名</td>
+				<td>{$message.username}</td>
+			</tr>
+			<tr>
+				<td>昵称</td>
+				<td>{$message.bbsname}</td>
+			</tr>
+			<tr>
+				<td>密码(密文)</td>
+				<td>{$message.password}</td>
+			</tr>
+			<tr>
+				<td>邮箱</td>
+				<td>{$message.email}</td>
+			</tr>
+			<tr>
+				<td>手机</td>
+				<td>{$message.phone|default="暂未设置"}</td>
+			</tr>
+			<tr>
+				<td>性别</td>
+				<td>
+					{if $message.sex eq 0}
+					保密
+					{elseif $message.sex eq 1}
+					男
+					{elseif $message.sex eq 2}
+					女
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<td>生日</td>
+				<td>{$message.birthday|default="暂未设置"}</td>
+			</tr>
+			<tr>
+				<td>支付密码</td>
+				<td>{$message.paywd}</td>
+			</tr>
+			<tr>
+				<td>生日</td>
+				<td>{$message.birthday}</td>
+			</tr>
+			<tr>
+				<td>余额</td>
+				<td>{$message.points}</td>
+			</tr>
+			<tr>	
+				<td>累计消费</td>
+				<td>{$message.pay_points}</td>
+			</tr>
+			<tr>
+				<td>省份</td>
+				<td>{$message.province}</td>
+			</tr>
+			<tr>
+				<td>市区</td>
+				<td>{$message.city}</td>
+			</tr>
+			<tr>
+				<td>县区</td>
+				<td>{$message.dustrict}</td>
+			</tr>
+			<tr>
+				<td>详细地址</td>
+				<td>{$message.address}</td>
+			</tr>
+			<tr>
+				<td>注册时间</td>
+				<td>{$message.reg_time}</td>
+			</tr>
+			<tr>
+				<td>最后登录</td>
+				<td>{$message.last_login}</td>
+			</tr>
+			<tr>
+				<td>用户状态</td>
+				<td>
+					{if $message.status eq 0}
+						锁定
+					{else /}
+						正常
+					{/if}
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>
