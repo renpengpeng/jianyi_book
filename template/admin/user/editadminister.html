@@ -10,7 +10,7 @@
 		
 	</div>
 		<div class="alert alert-warning tip-alert"></div>
-		<form action="{:url('admin/user/editadmin')}" method="post" onsubmit="return UserEditForm($(this));">
+		<form action="{:url('admin/user/editadmin')}" method="post" onsubmit="return AdminEditForm($(this));">
 			<table class="table table-bordered">
 				<!-- 隐藏 type -->
 				<input type="hidden" name="type" value="{$type}">
@@ -22,7 +22,55 @@
 						<input type="text" name="id" class="form-control" value="{$message.admin_id}" readonly="不可更改">	
 					</td>
 				</tr>
-				
+				<tr>
+					<td>
+						<label>用户名</label>
+					</td>
+					<td>
+						<input type="text" name="username" class="form-control" value="{$message.username}">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>昵称</label>
+					</td>
+					<td>
+						<input type="text" name="bbsname" class="form-control" value="{$message.bbsname}">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>密码</label>
+					</td>
+					<td>
+						<input type="text" name="passowrd" class="form-control" placeholder="留空则不修改">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>权限</label>
+					</td>
+					<td>
+						<select name="permissions" class="form-control">
+							<option value="">不修改</option>
+							<option value="0">超级管理员</option>
+							<option value="1">副超级管理员</option>
+							<option value="2">运营团队</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>状态</label>
+					</td>
+					<td>
+						<select name="status" class="form-control">
+							<option value="">不修改</option>
+							<option value="1">正常</option>
+							<option value="0">锁定</option>
+						</select>
+					</td>
+				</tr>
 			</table>
 			<input type="submit" class="btn btn-success" value="提交">
 		</form>

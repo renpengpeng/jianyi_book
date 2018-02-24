@@ -21,12 +21,12 @@
 	<div class="admin-top-nav">
 		<ul>
 			<li>
-				<a href="{:url('admin/user/info')}">
+				<a href="{:url('admin/user/show',['type'=>'administer','id'=>$Think.session.admin_id.admin_id])}">
 					你好，{$Think.session.admin_id.bbsname}
 				</a>
 			</li>
 			<li>
-				<a href="{:url('admin/user/modify_info')}">
+				<a href="{:url('admin/user/edit',['type'=>'administer','id'=>$Think.session.admin_id.admin_id])}">
 					修改个人信息
 				</a>
 			</li>

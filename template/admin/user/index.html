@@ -67,7 +67,17 @@
 							<span class="btn btn-sm btn-danger" onclick="buttonHref($(this));" href="{:url('admin/user/status',['type'=>$type,'id'=>$userArr.admin_id])}">锁定用户</span>
 						{/if}
 					{/if}
-					<span class="btn btn-sm btn-warning">修改信息</span>
+					<span class="btn btn-sm btn-warning">
+						{if $type eq 'user'}
+						<a href="{:url('admin/user/edit',['type'=>$type,'id'=>$userArr.user_id])}">
+							修改信息
+						</a>
+						{else /}
+						<a href="{:url('admin/user/edit',['type'=>$type,'id'=>$userArr.admin_id])}">
+							修改信息
+						</a>
+						{/if}
+					</span>
 					{if $type eq 'user'}
 						<a href="{:url('admin/user/show',['type'=>$type,'id'=>$userArr.user_id])}" class="btn btn-sm btn-default">查看详细</a>
 					{else /}

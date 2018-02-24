@@ -24,10 +24,12 @@
 				</tr>
 				<tr>
 					<td>
-						<label>头像地址</label>
+						<label>用户头像</label>
 					</td>
 					<td>
-						<input type="text" name="head-pic" class="form-control" value="{$message.head_pic}">
+						<div class="head-pic-div" style="background-image: url(http://{$_SERVER['HTTP_HOST']}{$message.head_pic});background-size: 80px 80px;">
+							<input type="file" name="head-pic" class="form-control" style="opacity: 0;" accept="image/*" onchange="HeadPicUpload(this)">
+						</div>
 					</td>
 				</tr>
 				<tr>
@@ -67,7 +69,7 @@
 						<label>手机</label>
 					</td>
 					<td>
-						<input type="text" name="phone" class="form-control" value="{$message.phone}">
+						<input type="number" name="phone" class="form-control" value="{$message.phone}">
 					</td>
 				</tr>
 				<tr>

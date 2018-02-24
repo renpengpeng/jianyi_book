@@ -19,8 +19,17 @@ class Index extends Controller {
 	public function index(){
 		return view();
 	}
-		/*	退出登录	*/
+	/*
+		*	提示信息
+		*	接收参数：$msg ->提示文字
+	*/
+	public function cavaet($msg='默认提示信息'){
+		$this->assign('msg',$msg);
+		return view();
+	}
+	/*	退出登录	*/
 	public function go_out(){
+		Session::delete('admin_id');
 		$this->redirect('admin/login/index');
 	}
 }
