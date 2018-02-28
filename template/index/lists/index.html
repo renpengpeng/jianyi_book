@@ -1,0 +1,40 @@
+{include file="../template/index/base/header.html"}
+<div class="container-fluid index-box">
+	<div class="container">
+		{include file="../template/index/base/list-sidebar.html"}
+		<!-- box内容区 -->
+		<div class="col-md-9">
+			<div class="list-box-title">
+				{$cateData.cate_name} - 共{$shopCount}个商品
+			</div>
+			<div class="list-box-list">
+				<ul>
+					{volist name="shopData" id="shopData"}
+						<li>
+							<div class="col-md-3">
+								<a href="{:url('index/book/index',['id'=>$shopData.good_id])}" title="{$shopData.title}">
+									<div class="list-box-shop-img">
+										<img src="{$shopData.main_img}" width="90%" alt="{$shopData.title}">
+									</div>
+									<div class="list-box-shop-title">
+										{$shopData.title}
+									</div>
+									<div class="list-box-shop-press">
+										<span class="price">
+											¥{$shopData.price}
+										</span>
+										<span class="press">
+											¥{$shopData.press}
+										</span>
+									</div>
+								</a>
+							</div>
+						</li>
+					{/volist}
+				</ul>
+				{$pageination->render()}
+			</div>
+		</div>
+	</div>
+</div>
+{include file="../template/index/base/footer.html"}

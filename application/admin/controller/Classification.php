@@ -15,6 +15,12 @@ class Classification extends Controller {
 	public function _initialize(){
 		if(!Session::has('admin_id')){
 			$this->redirect(url('admin/login/index'));
+		}else{
+			$adminSession 	=	Session('admin_id');
+			// 运营团队不允许修改分类
+			if($adminSession['permissions'] == 2){
+				$this->redirect(url('admin/index/cavaet',['msg'=>'没有足够的权限']));
+			}
 		}
 	}
 	// 首页 展示所有分类
@@ -59,9 +65,11 @@ class Classification extends Controller {
 
 		// 整理插入数据
 		$insertData	=	[
-			'cate_name'	=>	$data['catename'],
-			'pid'		=>	$data['pid'],
-			'garden'	=>	$garden
+			'cate_name'		=>	$data['catename'],
+			'pid'			=>	$data['pid'],
+			'garden'		=>	$garden,
+			'keywords' 		=>	$data['keywords'],
+			'description' 	=>	$data['description']
 		];
 
 
@@ -137,11 +145,14 @@ class Classification extends Controller {
 
 		// 开始接收
 			// 上级分类id
-			$lastCateId			=	$data['last-id'];
+			$lastCateId			=	$data['last_id'];
 			// 分类名称
-			$cateName 			=	$data['cate-name'];
+			$cateName 			=	$data['cate_name'];
 			// 接收分类id
-			$cateId 			=	$data['cate-id'];
+			$cateId 			=	$data['cate_id'];
+			// 接收关键词
+			$cateKeywords 		=	$data['keywords'];
+			$cateDescription 	=	$data['description'];
 
 		// 如果上级分类为0 
 		if($lastCateId != 0){
@@ -156,11 +167,17 @@ class Classification extends Controller {
 			$updateData 		=	[
 				'cate_name' =>	$cateName,
 				'pid'		=>	$lastCateId,
-				'graden'	=>	$nowCateGraden
+				'graden'	=>	$nowCateGraden,
+				'keywords' 	=>	$cateKeywords,
+				'description'	=>	$cateDescription
 			];
 		}else{
 			// 只修改分类名称 * 重组修改数据
-			$updateData			=	['cate_name'=>$cateName];
+			$updateData			=	[
+				'cate_name'=>$cateName,
+				'keywords' 	=>	$cateKeywords,
+				'description'	=>	$cateDescription
+			];
 
 		}
 

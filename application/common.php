@@ -225,3 +225,315 @@ function getSetting(){
 
 	return $result;
 }
+/*
+	*	获取所有分类 
+	*	用于首页
+*/
+function getCateForIndexA($pid=0,$ci=1){
+	if($pid == 0){
+		$result 	=	'<div class="listCate">';
+	}else{
+		$result 	=	'';
+	}
+
+	// 开始获取
+	$oneGet	=	Model('BookCates')->where('pid',$pid)->order('cate_id asc')->select()->toArray();
+
+	foreach ($oneGet as $key => $value) {
+		if($pid != 0){
+			$result 	.= 	'<div class="list-z">';
+			$result 	.=	'<span class="list-zi">';
+		}else{
+			$result 	.=	'<div class="list">';
+		}
+		
+		$result 	.= '<a href="'.url('index/lists/index',['id'=>$oneGet[$key]['cate_id']]).'">';
+		$result 	.=	$oneGet[$key]['cate_name'];
+		$result 	.=	'</a>';
+		
+		if($pid ==	0){
+			$result 	.=	'</div>';
+		}else{
+			$result 	.=	'</span>';
+		}
+
+
+		// 如果查询分类数量
+		$ziNum	=	Model('BookCates')->where('pid',$oneGet[$key]['cate_id'])->count();
+
+		if($ziNum > 0){
+			// 查询ID
+			$geID	=	Model('BookCates')->where('pid',$oneGet[$key]['cate_id'])->order('cate_id asc')->select()->toArray();
+
+			// 遍历
+			foreach ($geID as $k => $v) {
+				if($pid != 0){
+						$result 	.=	'<span class="list-zi-zi">';
+
+				}else{
+					$result 	.=	'<div class="list">';
+				}
+				
+				$result 	.= '<a href="'.url('index/lists/index',['id'=>$geID[$k]['cate_id']]).'">';
+				$result 	.=	$geID[$k]['cate_name'];
+				$result 	.=	'</a>';
+				
+				if($pid ==	0){
+					$result 	.=	'</div>';
+				}else{
+					$result 	.=	'</span>';
+					$result 	.=	'</div>';
+				}
+
+				$ci += 1;
+				$result .=	getCateForIndexA($geID[$k]['cate_id'],$ci);
+			}
+		}
+	}
+	if($pid 	==	0){
+			$result 	.=	'</div></div>';
+		}else{
+			$result 	.=	'</span>';
+	}
+
+	return $result;
+}
+/*
+	*	获取所有分类通过超链接显示
+*/
+function getCateForIndexAllA($pid=0){
+	$result 	=	'';
+
+	// 开始获取
+	$oneGet	=	Model('BookCates')->where('pid',$pid)->order('cate_id asc')->select()->toArray();
+
+	foreach ($oneGet as $key => $value) {
+		
+		$result 	.= '<a href="'.url('index/lists/index',['id'=>$oneGet[$key]['cate_id']]).'">';
+		$result 	.=	$oneGet[$key]['cate_name'];
+		$result 	.=	'</a>';
+
+		// 如果查询分类数量
+		$ziNum	=	Model('BookCates')->where('pid',$oneGet[$key]['cate_id'])->count();
+
+		if($ziNum > 0){
+			// 查询ID
+			$geID	=	Model('BookCates')->where('pid',$oneGet[$key]['cate_id'])->order('cate_id asc')->select()->toArray();
+
+			// 遍历
+			foreach ($geID as $k => $v) {
+				
+				$result 	.= '<a href="'.url('index/lists/index',['id'=>$geID[$k]['cate_id']]).'">';
+				$result 	.=	$geID[$k]['cate_name'];
+				$result 	.=	'</a>';
+				
+				$result .=	getCateForIndexAllA($geID[$k]['cate_id']);
+			}
+		}
+	}
+	
+
+	return $result;
+}
+/*
+	*	getMeta
+	*	通过当前页面属性与系统设置来拼接:标题、关键词、描述、是否拒绝索引
+	*	@varchar $type
+			可选属性: page 		->	页面
+					 list 		->	列表
+					 listall	->	所有列表
+					 index 		->	首页
+					 shop  		->	商品
+					 login 		->	登录
+					 reg 		->	注册
+					 getback 	->	找回密码
+					 user 		->	用户中心
+
+	*	@int $id   传递id
+	*	@varchar 	$index
+			可选属性：
+					'' 	->	文件将被检索，且页面上的链接可以被查询   		 (all)
+					 0 	->	文件将不被检索，且页面上的链接不可以被查询		（none）
+					 1 	->	文件将被检索	   								 (index)
+					 2 	-> 	页面上的链接可以被查询						 (follow)
+					 3	->  文件将不被检索，但页面上的链接可以被查询		 (noindex)
+					 4 	->	文件将不被检索，页面上的链接可以被查询 			 (nofollow)
+*/
+function getMeta($type='index',$id=0,$index='',$msg=''){
+
+	// 获取setting
+	$setting 			=	getSetting();
+
+	// 获取首页标题组合方式
+	$indexTitleType 	=	$setting['index_title_type'];
+
+	// 获取其他页面标题组合方式
+	$otherTitleType 	=	$setting['other_title_type'];
+
+	// 获取站点标题
+	$webTitle 			=	$setting['web_title'];
+
+	// 获取站点关键词
+	$webKeywords 		=	$setting['web_keywords'];
+
+	// 获取站点描述
+	$webDescription 	=	$setting['web_description'];
+
+	// 获取站点标题描述
+	$webTitleDes 		=	$setting['web_title_description'];
+
+	// 获取标题分隔符
+	$webTitleLine 		=	$setting['web_title_line'];
+
+	// 根据$index 来生成robots
+	switch ($index) {
+		case '':
+			$robots 	=	'robots';
+		break;
+
+		case 0:
+			$robots 	=	'none';
+		break;
+
+		case 1:
+			$robots 	=	'index';
+		break;
+
+		case 2: 
+			$robots 	=	'follow';
+		break;
+		
+		case 3:
+			$robots 	=	'noindex';
+		break;
+
+		case 4:
+			$robots 	=	'nofollow';
+		break;
+
+		default:
+			$robots 	=	'index';
+		break;
+	}
+	/*
+		*	开始生成关键词与描述
+	*/
+	switch ($type) {
+		case 'index':
+			if($indexTitleType == 0){
+				$title 		=	$webTitle.$webTitleLine.$webTitleDes;
+			}else{
+				$title 		=	$webTitle;
+			}
+
+			$keywords 		=	$webKeywords;
+			$description  	=	$webDescription;
+		break;
+		
+		case 'listall':
+			// 获取数据库内信息
+			$listAllInfo 	=	$setting['listall_meta'];
+
+			// 分割为数组
+			$listAllArr 	=	explode(',', $listAllInfo);
+
+			// 拼接标题
+			if($otherTitleType == 0){
+				$title 		=	$listAllArr[0].$webTitleLine.$webTitle;
+			}else{
+				$title 		=	$listAllArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
+			}
+
+			$keywords 		=	$listAllArr[1];
+			$description 	=	$listAllArr[2];
+		break;
+
+		case 'cavaet':
+			// 拼接标题
+			if($otherTitleType == 0){
+				$title 		=	$msg.$webTitleLine.$webTitle;
+			}else{
+				$title 		=	$msg.$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
+			}
+			$keywords 		=	$msg;
+			$description 	=	$msg;
+		break;
+
+		case 'list':
+			// 通过ID获取分类信息
+			$cateArr 		=	Model('BookCates')->get($id);
+
+			if($cateArr){
+				// 拼接标题
+				if($otherTitleType == 0){
+					$title 	=	$cateArr['cate_name'].$webTitleLine.$webTitle;
+				}else{
+					$title 	=	$cateArr['cate_name'].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
+				}
+
+				$keywords 		=	$cateArr['keywords'];
+				$description 	=	$cateArr['description'];
+			}
+		break;
+		default:
+			
+		break;
+	}
+
+	// 判断如果没有为空
+	if(empty($title)){
+		$title 			=	'';
+	}
+	if(empty($keywords)){
+		$keywords 		=	'';
+	}
+	if(empty($description)){
+		$description 	=	'';
+	}
+
+	// 组合数组
+	$result 	=	[
+		'title'			=>	$title,
+		'keywords' 		=>	$keywords,
+		'description'	=>	$description,
+		'robots'		=>	$robots
+	];
+
+	return $result;
+}
+/*
+	*	获取list 界面的sidebar数据
+*/
+function getListSidebar(){
+	// 获取系统参数
+	$setting 				=	getSetting();
+
+	// 赋值最新展示数量
+	$sidebarNewShowNum 		=	$setting['list_sidebar_new_show_num'];
+
+	// 获取猜你喜欢展示数量
+	$sidebarLikeShowNum 	=	$setting['list_sidebar_like_show_num'];
+
+	// 获取最新商品
+	$newArr 	=	Model('BookGoods')
+						->order('good_id desc')
+						->where('status',1)
+						->limit($sidebarNewShowNum)
+						->select()
+						->toArray();
+
+	// 获取猜你喜欢商品
+	$likeArr 	=	Model('BookGoods')
+					->where('status',1)
+					->order("rand()")
+					->select()
+					->toArray();
+
+	// 组合数据
+	$result 	=	[
+		'new' 	=>	$newArr,
+		'like'	=>	$likeArr
+	];
+
+	return $result;
+}

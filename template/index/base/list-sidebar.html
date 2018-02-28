@@ -1,0 +1,74 @@
+<!-- 侧边栏 -->
+		<div class="col-md-3">
+			<!-- 
+				*	最新上架
+			 -->
+			<div class="list-sidebar-title">
+				最新上架
+				<span class="list-sidebar-title-right">
+					<a href="">
+						查看更多>>
+					</a>
+				</span>
+			</div>
+			<div class="list-sidebar-new-list">
+				<ul>
+					{volist name="sidebarData.new" id="new"}
+					<li>
+						<a href="{:url('index/book/index',['id'=>$new.good_id])}" title="{$new.title}">
+							<div class="col-md-5">
+								<img src="{$new.main_img}" width="80%" alt="{$new.title}">
+							</div>
+							<div class="col-md-6">
+								<div class="list-sidebar-shop-title" style="height: 70px;">
+									{$new.title}
+								</div>
+								<div class="list-sidebar-shop-press">
+									<span class="price">
+										¥{$new.price}
+									</span>
+									<span class="press">
+										¥{$new.press}
+									</span>
+								</div>
+							</div>
+						</a>
+					</li>
+					{/volist}
+				</ul>
+			</div>
+			<div class="list-sidebar-title">
+				猜你喜欢
+				<span class="list-sidebar-title-right">
+					<a href="">
+						查看更多>>
+					</a>
+				</span>
+			</div>
+			<div class="list-sidebar-new-list">
+				<ul>
+					{volist name="sidebarData.like" id="like"}
+					<li>
+						<a href="{:url('index/book/index',['id'=>$like.good_id])}" title="{$like.title}">
+							<div class="col-md-5">
+								<img src="{$new.main_img}" width="80%" alt="{$like.title}">
+							</div>
+							<div class="col-md-6">
+								<div class="list-sidebar-shop-title" style="height: 70px;">
+									{$like.title}
+								</div>
+								<div class="list-sidebar-shop-press">
+									<span class="price">
+										¥{$like.price}
+									</span>
+									<span class="press">
+										¥{$like.press}
+									</span>
+								</div>
+							</div>
+						</a>
+					</li>
+					{/volist}
+				</ul>
+			</div>
+		</div>

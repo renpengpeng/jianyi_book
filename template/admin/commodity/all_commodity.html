@@ -3,7 +3,23 @@
 <div class="container-fluid admin-box">
 	{include file="../template/admin/base/sidebar.html"}
 	<div class="col-md-10">
-		<div class="admin-box-title">全部商品管理</div>
+		<div class="admin-box-title">
+			{if $status eq ''}
+				全部商品
+			{elseif $status eq 0}
+				仓库中的商品
+			{else /}
+				出售中的商品
+			{/if}
+			<!-- 商品搜索 -->
+			<div class="box-title-search">
+				<div class="form-inline">
+					<input type="hidden" name="search_status" value="{$status}">
+					<input type="text" name="search_title" class="form-control" placeholder="标题">
+					<input type="submit" class="btn btn-warning" value="搜索" id="shop-search" src="{:url('admin/commodity/search_commodity',['status'=>$status])}">
+				</div>
+			</div>
+		</div>
 		<div class="alert alert-warning tip-alert"></div>
 		<table class="table table-bordered shop-administer" style="text-align: center;">
 			<tr>
@@ -32,7 +48,11 @@
 					{/if}
 				</td>
 				<td>
-					<button class="btn btn-sm btn-success">编辑</button>
+					<button class="btn btn-sm btn-success">
+						<a href="{:url('admin/commodity/edit_commodity',['id'=>$allGoods.good_id])}">
+							编辑
+						</a>
+					</button>
 					{if $allGoods.status eq 1}
 					<button class="btn btn-sm btn-warning" href="{:url('admin/commodity/status',['id'=>$allGoods.good_id])}" onclick="return buttonHref($(this))">下架</button>
 					{else /}

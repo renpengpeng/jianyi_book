@@ -15,6 +15,8 @@ class Commodity extends Controller{
 	public function _initialize(){
 		if(!Session::has('admin_id')){
 			$this->redirect(url('admin/login/index'));
+		}else{
+			$adminSession 	=	Session('admin_id');
 		}
 	}
 	public function index(){
@@ -23,8 +25,12 @@ class Commodity extends Controller{
 	}
 	/*
 		*	全部商品
+		*	根据switch 来获取
+		*	status 	= 	'' 	全部商品
+		*	status 	= 	0 	仓库中的商品
+		*	status 	= 	1	出售中的商品
 	*/
-	public function all_commodity(){
+	public function all_commodity($status=''){
 		// 获取系统设置
 		$setting 		=	getSetting();
 
@@ -38,21 +44,63 @@ class Commodity extends Controller{
 			$page = input('page');
 		}
 
-		// 获取所有商品根据ID 倒序
-		$allGoods  		=	Model('BookGoods')
-								->order('good_id desc')
-								->limit($adminShowNum)
-								->page($page)
-								->select();
+		switch ($status) {
+			// 全部商品
+			case '': 
+				// 获取所有商品根据ID 倒序
+				$allGoods  		=	Model('BookGoods')
+										->order('good_id desc')
+										->limit($adminShowNum)
+										->page($page)
+										->select();
 
-		// 分页显示
-		$pageination 	=	Model('BookGoods')->paginate($adminShowNum);
+				// 分页显示
+				$pageination 	=	Model('BookGoods')->paginate($adminShowNum);
+			break;
+			
+			// 仓库中的商品
+			case '0':
+				// 获取所有商品根据ID 倒序
+				$allGoods  		=	Model('BookGoods')
+										->where('status',$status)
+										->order('good_id desc')
+										->limit($adminShowNum)
+										->page($page)
+										->select();
+
+				// 分页显示
+				$pageination 	=	Model('BookGoods')->where('status',$status)->paginate($adminShowNum);
+			break;
+
+			// 出售中的商品
+			case '1':
+				// 获取所有商品根据ID 倒序
+				$allGoods  		=	Model('BookGoods')
+										->where('status',$status)
+										->order('good_id desc')
+										->limit($adminShowNum)
+										->page($page)
+										->select();
+
+				// 分页显示
+				$pageination 	=	Model('BookGoods')->where('status',$status)->paginate($adminShowNum);
+			break;
+
+			// 超出范围
+			default:
+				$this->redirect(url('admin/index/cavaet',['msg'=>'超出范围']));
+			break;
+		}
+		
 
 		// 赋值所有商品
 		$this->assign('allGoods',$allGoods);
 
 		// 赋值分页
 		$this->assign('pageination',$pageination);
+
+		// 赋值status 
+		$this->assign('status',$status);
 
 		return view();
 	}
@@ -82,15 +130,12 @@ class Commodity extends Controller{
 
 		// 获取上传路径
 		$uploadPath			=	$setting['admin_upload_pic_path'];
-		// 获取上传加密方式
-		$uploadEncryption	=	$setting['upload_pic_encryption_type'];
 		// 获取最大上传字节
 		$uploadBigSize		=	$setting['upload_pic_big_size'];
 		// 获取可上传的文件后缀
 		$uploadExtType		=	$setting['upload_pic_ext_type'];
 
 		// 移动文件
-		if($uploadEncryption == 0){
 			$move = $file->validate(['size'=>$uploadBigSize,'ext'=>$uploadExtType])->move($uploadPath);
 			if($move){
 				// 修改path
@@ -113,7 +158,6 @@ class Commodity extends Controller{
 			}else{
 				return json(['code'=>0,'上传失败']);
 			}
-		}
 	}
 	/*
 		*	插入新产品
@@ -129,11 +173,17 @@ class Commodity extends Controller{
 
 		// 添加时间参数
 		$data['time']		=	$nowTime;
+
 		// 添加图书编码
 		$data['numbering']	=	$numbering;
 
-		// 过滤商品描述的字符
-		$data['details']	=	htmlspecialchars($data['details']);
+		// 过滤字符
+		$data['details'] 	=	htmlspecialchars_decode($data['details']);
+
+		// 删除good_id
+		if(isset($data['good_id'])){
+			unset($data['good_id']);
+		}
 
 		// 开始添加
 		$insert 		=	Model('BookGoods')->insert($data);
@@ -190,41 +240,128 @@ class Commodity extends Controller{
 			return json(['code'=>0,'msg'=>'删除失败']);
 		}
 	}
+
 	/*
-		*	出售中的商品
+		*	商品搜索
+		*	根据status 	
+		*	status = null 	搜索全部商品
+		*	status = 0		仓库中的商品
+		*	status = 1 		出售中的商品
 	*/
-	public function sale_commodity(){
-		// 获取系统setting
-		$setting 		= 	getSetting();
+	public function search_commodity($status='',$title=''){
 
-		// 获取每页显示多少数量
-		$adminShowNum 	=	$setting['admin_list_show_num'];
+		// 获取setting
+		$setting 			=	getSetting();
+		// 获取每页展示多少数量
+		$adminShowNum 		=	$setting['admin_list_show_num'];
 
-		// 判断page
-		if(!input('page')){
-			$page = 1;
+		if($status == ''){
+			$searchArr 		=	Model('BookGoods')
+									->where('title','like',"%{$title}%")
+									->select();
+			// 分页
+			$pageination 	=	Model('BookGoods')->where('title','like',"%{$title}%")->paginate($adminShowNum);
 		}else{
-			$page = input('page');
+			$searchArr 		=	Model('BookGoods')
+									->where('title','like',"%{$title}%")
+									->where('status',$status)
+									->select();
+			// 分页
+			$pageination  	=	Model('BookGoods')->where('title','like',"%{$title}%")
+										->where('status',$status)
+										->paginate($adminShowNum);
 		}
 
-		// 根据page获取正在出售中的商品 good_id倒序   status为1
-		$saleArr 	=	Model('BookGoods')
-							->where('status',1)
-							->order('good_id desc')
-							->limit($adminShowNum)
-							->page($page)
-							->select();
-
-		// 分页
-		$pageination 	=	Model('BookGoods')->where('status',1)->paginate($adminShowNum);
-
-		// 赋值商品 
-		$this->assign('saleArr',$saleArr);
-
-		// 赋值分页
+		// 赋值
+		$this->assign('title',$title);
+		$this->assign('searchArr',$searchArr);
 		$this->assign('pageination',$pageination);
 
 		return view();
+	}
+	/*
+		*	编辑商品
+	*/
+	public function edit_commodity($id){
+
+		// dump($_COOKIE);
+
+		// 获取商品参数
+		$shopMessage 		=	Model('BookGoods')->get($id);
+
+		if($shopMessage){
+			$shopMessage 	=	$shopMessage->toArray();
+
+			// 获取主图 x1 ， 副图 x4 分别分割为数组并分割写入cookie
+
+
+				// 赋值主图到cookie
+				Cookie('pic1',$shopMessage['main_img']);
+
+				// 获取副图并分割
+				$fuPic 		=	$shopMessage['vice_img'];
+
+				$fuPicArr 	=	explode(',',$fuPic);
+
+				// 分别赋值副图
+				Cookie::set('pic2',$fuPicArr[0]);
+				Cookie::set('pic3',$fuPicArr[1]);
+				Cookie::set('pic4',$fuPicArr[2]);
+				Cookie::set('pic5',$fuPicArr[3]);
+
+			// 获取所有分类
+			$allCate	=	adminGetCateForOption();
+
+			// dump($_COOKIE);
+			// 分割出版日期
+				// if(!empty($data['press_date'])){
+
+				// }
+
+			$this->assign('allCate',$allCate);
+			$this->assign('shopMessage',$shopMessage);
+
+			// 赋值副图
+			$this->assign('vice_img',$fuPicArr);
+
+			return view();
+		}else{
+			$this->redirect(url('admin/index/cavaet',['msg'=>'未知商品ID']));
+		}
+	}
+	/*
+		*	修改商品
+	*/
+	public function edit_shop(){
+		$data 	=	input('post.');
+
+		// 获取good_id
+		$good_id 	=	$data['good_id'];
+
+		// 开始删除所有空值
+		foreach ($data as $key => $value) {
+			// 格式化字符串
+			$data[$key] 	=	htmlspecialchars($data[$key]);
+
+			if(empty($data[$key])){
+				unset($data[$key]);
+			}
+		
+		}
+
+		// 删除good_id
+		if(isset($data['good_id'])){
+			unset($data['good_id']);
+		}
+
+		// 开始更新
+		$update 	=	Model('BookGoods')->where('good_id',$good_id)->update($data);
+
+		if($update){
+			return json(['code'=>1,'msg'=>'修改成功']);
+		}else{
+			return json(['code'=>0,'msg'=>'修改失败']);
+		}
 	}
 }
 

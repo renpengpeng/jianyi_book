@@ -3,11 +3,13 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,mininum-scale=1,maxinum-scale=1">
-	<title>简易书城</title>
-	<meta name="keywords" content="">
-	<meta name="description" content="">
+	<title>{$meta.title}</title>
+	<meta name="keywords" content="{$meta.keywords}">
+	<meta name="description" content="{$meta.description}">
+	<meta name="robots" content="{$meta.robots}">
 	<link rel="stylesheet" type="text/css" href="http://{$_SERVER['HTTP_HOST']}/static/style/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="http://{$_SERVER['HTTP_HOST']}/static/style/index.css">
+	<link rel="stylesheet" type="text/css" href="http://{$_SERVER['HTTP_HOST']}/static/style/skippr.css">
  </head>
 <body>
 <!-- 
@@ -45,7 +47,7 @@
  	<!-- logo -->
  	<div class="col-md-4 common-nav-logo-logo">
  		<a href="http://{$_SERVER['HTTP_HOST']}">
- 			<img src="http://demo.haidao.la/template/default/statics/images/logo.png">
+ 			<img src="http://{$_SERVER['HTTP_HOST']}/static/img/logo.jpg">
  		</a>
  	</div>
  	<!-- 搜索框 -->
@@ -73,6 +75,11 @@
 -->
 <div class="container-fluid common-nav-class">
 	<div class="container common-nav-class-title">
-		全部商品分类 >
+		<a href ="{:url('index/lists/index',['id'=>'all'])}" id="headerCateShow">
+			全部商品分类 >
+		</a>
 	</div>
+</div>
+<div class="container-fluid common-nav-cate">
+	{$allCate}
 </div>

@@ -1,0 +1,63 @@
+{include file="../template/admin/base/header.html"}
+<!-- 内容区 -->
+<div class="container-fluid admin-box">
+	{include file="../template/admin/base/sidebar.html"}
+	<div class="col-md-10">
+		<div class="admin-box-title">
+			系统设置
+		</div>
+		<div class="alert alert-warning tip-alert"></div>
+		<div class="admin-setting-box">
+			<form action="{:url('admin/setting/modify')}" method="post" onsubmit="return settingEditForm(this);">
+				<div class="form-group">
+					<label>网站标题</label>
+					<input type="text" name="web_title" class="form-control" value="{$setting.web_title}">
+				</div>
+				<div class="form-group">
+					<label>副标题</label>
+					<input type="text" name="web_title_description" class="form-control" value="{$setting.web_title_description}">
+				</div>
+				<div class="form-group">
+					<label>网站关键词</label>
+					<input type="text" name="web_keywords" class="form-control" value="{$setting.web_keywords}">
+				</div>
+				<div class="form-group">
+					<label>网站描述</label>
+					<textarea class="form-control" name="web_description">{$setting.web_description}</textarea>
+				</div>
+				<div class="form-group">
+					<label>网站创建时间</label>
+					<input type="text" name="web_create_time" class="form-control" value="{$setting.web_create_time}">
+				</div>
+				<hr>
+				<div class="form-group">
+					<label>后台列表每页展示多少数量</label>
+					<input type="number" name="admin_list_show_num" class="form-control" value="{$setting.admin_list_show_num}">
+				</div>
+				<hr>
+				<div class="form-group">
+					<label>后台上传目录</label>
+					<input type="text" name="admin_upload_pic_path" class="form-control" value="{$setting.admin_upload_pic_path}">
+				</div>
+				<div class="form-group">
+					<label>前台上传目录</label>
+					<input type="text" name="user_upload_pic_path" class="form-control" value="{$setting.user_upload_pic_path}">
+				</div>
+				<div class="form-group">
+					<label>上传文件最大大小(单位：字节 1m=1048576字节)</label>
+					<input type="number" name="upload_pic_big_size" class="form-control" value="{$setting.upload_pic_big_size}">
+				</div>
+				<hr>
+				<div class="form-group">
+					<label>网站底部代码(统计，自动提交等)</label>
+					<textarea name="footer_code" class="form-control">{$setting.footer_code}</textarea>
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-success" value="修改">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+</html>

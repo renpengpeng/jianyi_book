@@ -8,19 +8,19 @@
 					发布商品
 			</li>
 			<li class="">
-				<a href="{:url('admin/commodity/all_commodity')}">
+				<a href="{:url('admin/commodity/all_commodity',['status'=>''])}">
 					<img src="http://{$_SERVER['HTTP_HOST']}/static/img/admin-sidebar/quanbushangping.png">
 					全部商品
 				</a>
 			</li>
 			<li class="">
-				<a href="{:url('admin/commodity/sale_commodity')}">
+				<a href="{:url('admin/commodity/all_commodity',['status'=>1])}">
 					<img src="http://{$_SERVER['HTTP_HOST']}/static/img/admin-sidebar/chushouzhong.png">
 					出售中的商品
 				</a>
 			</li>
 			<li class="">
-				<a href="">
+				<a href="{:url('admin/commodity/all_commodity',['status'=>0])}">
 					<img src="http://{$_SERVER['HTTP_HOST']}/static/img/admin-sidebar/cangkuzhong.png">
 					仓库中的商品
 				</a>
@@ -65,6 +65,12 @@
 				<a href="{:url('admin/user/index')}">
 					<img src="http://{$_SERVER['HTTP_HOST']}/static/img/admin-sidebar/user.png">
 					用户管理
+				</a>
+			</li>
+			<li>
+				<a href="{:url('admin/setting/index')}">
+					<img src="http://{$_SERVER['HTTP_HOST']}/static/img/admin-sidebar/setting.png">
+					系统设置
 				</a>
 			</li>
 		</ul>

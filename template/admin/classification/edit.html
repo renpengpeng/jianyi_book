@@ -21,6 +21,14 @@
 					<input type="text" name="cate-name" class="form-control" value="{$cateInfo.cate_name}">
 				</div>
 				<div class="form-group">
+						<label>关键词：</label>
+						<input type="text" name="cate_keywords" class="form-control" value="{$cateInfo.keywords}">
+				</div>
+					<div class="form-group">
+						<label>描述</label>
+						<textarea name="cate_description" class="form-control">{$cateInfo.description}</textarea>
+					</div>
+				<div class="form-group">
 					<input type="submit" class="btn btn-success" value="修改">
 				</div>
 			</form>
