@@ -3,10 +3,14 @@
 	{include file="../template/index/base/user-sidebar.html"}
 	<div class="col-md-8">
 		<!-- 个人中心 -->
-		<div class="index-user-head">
+		<div class="index-user-head" style="background:#ddd;" >
 			<!-- 头像部分 -->
 			<div class="index-user-head-pic">
+				{if $userMessage.head_pic eq null}
 				<img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=4127943392,3155017862&fm=27&gp=0.jpg">
+				{else /}
+					<img src="{$userMessage.head_pic}" height="100" width="100">
+				{/if}
 			</div>
 			<div class="clearfix"></div>
 			
@@ -16,7 +20,7 @@
 				<ul>
 					<li>余额&nbsp;<b>{$userMessage.points}</b></li>
 					<li>收货地址&nbsp;</li>
-					<li>我的订单&nbsp;<b>{$userOrders}</b></li>
+					<li>我的订单&nbsp;<b>{$countOrder}</b></li>
 					<li>退出登录</li>
 				</ul>
 			</div>	

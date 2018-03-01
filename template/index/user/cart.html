@@ -2,8 +2,43 @@
 <div class="container" style="margin-top:10px; margin-bottom: 10px;">
 	{include file="../template/index/base/user-sidebar.html"}
 	<div class="col-md-8">
-		购物车
-		
+		<div class="index-box-title">
+			购物车-(共{$cartCount}个商品)
+		</div>
+
+		<table class="table table-bordered" style="text-align: center;">
+			<tr>
+				<!-- <th>商品编号</th> -->
+				<th>商品名称</th>
+				<th>商品图片</th>
+				<th>购买数量</th>
+				<th>操作</th>
+			<tr>
+			{volist name="cartData" id="cart"}
+			<tr>
+				<!-- <td>
+					{$cart.numbering}
+				</td> -->
+				<td>
+					{$cart.shop_title}
+				</td>
+				<td>
+					<img src="{$cart.pic}" width="50" height="50">
+				</td>
+				<td>
+					<div class="form-inline">
+						<button class="btn btn-sm btn-default" onclick="cartShopNum('-',this)">-</button>
+						<input type="text" name="shop_buy_num" value="{$cart.good_num}" class="form-control" style="width: 50px;">
+						<button class="btn btn-sm btn-default" onclick="cartShopNum('+',this)">+</button>
+					</div>
+				</td>
+				<td>
+					<button class="btn btn-sm btn-success" onclick="shoppingCart({$cart.cart_id},this)">立即购买</button>
+					<button class="btn btn-sm btn-danger" onclick="cartDel({$cart.cart_id},this)" src="{:url('index/user/cart_del')}">删除</button>
+				</td>
+			</tr>
+			{/volist}
+		</table>
 	</div>
 </div>
 {include file="../template/index/base/footer.html"}

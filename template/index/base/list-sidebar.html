@@ -15,7 +15,7 @@
 				<ul>
 					{volist name="sidebarData.new" id="new"}
 					<li>
-						<a href="{:url('index/book/index',['id'=>$new.good_id])}" title="{$new.title}">
+						<a href="{:url('index/shop/index',['id'=>$new.good_id])}" title="{$new.title}">
 							<div class="col-md-5">
 								<img src="{$new.main_img}" width="80%" alt="{$new.title}">
 							</div>
@@ -49,7 +49,7 @@
 				<ul>
 					{volist name="sidebarData.like" id="like"}
 					<li>
-						<a href="{:url('index/book/index',['id'=>$like.good_id])}" title="{$like.title}">
+						<a href="{:url('index/shop/index',['id'=>$like.good_id])}" title="{$like.title}">
 							<div class="col-md-5">
 								<img src="{$new.main_img}" width="80%" alt="{$like.title}">
 							</div>

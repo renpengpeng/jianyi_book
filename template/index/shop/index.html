@@ -1,0 +1,195 @@
+{include file="../template/index/base/header.html"}
+<div class="container-fluid index-box">
+	<div class="container">
+		{include file="../template/index/base/list-sidebar.html"}
+		<div class="col-md-9 shop-view">
+			<!-- 展示图片 -->
+			<div class="col-md-5 shop-view-box">
+				<!-- 主图区域 -->
+				<div class="shop-view-pic-zhu">
+					<img src="{$shopData.pic1}" width="100%">
+				</div>
+				
+				<!-- 5个图片区域 -->
+				<div class="shop-view-pic-five">
+					<ul>
+						<li>
+							<img src="{$shopData.pic1}">
+						</li>
+						<li>
+							<img src="{$shopData.pic2}">
+						</li>
+						<li>
+							<img src="{$shopData.pic3}">
+						</li>
+						<li>
+							<img src="{$shopData.pic4}">
+						</li>
+						<li>
+							<img src="{$shopData.pic5}">
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="shop-view-title">
+					见识
+				</div>
+				<div class="shop-view-info">
+					<table class="table table-striped shop-view-info-table">
+						<tr>
+							<td>商品编号：{$shopData.numbering}</td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<td>线上售价：<span class="press"><b>￥{$shopData.price}</b></span></td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<td>
+								定价：<del>￥{$shopData.pricing}</del>
+							</td>
+							<td>
+								ISBN：{$shopData.isbn}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								出版社：{$shopData.press}
+							</td>
+							<td>
+								出版日期：{$shopData.press_date}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								作者：{$shopData.author}
+							</td>
+							<td>
+								浏览次数：{$shopData.view}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								印刷日期：{$shopData.print_date}
+							</td>
+							<td>
+								版次：{$shopData.edition}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								印次：{$shopData.print_number}
+							</td>
+							<td>
+								开本：{$shopData.format}开
+							</td>
+						</tr>
+						<tr>
+							<td>
+								套装：
+								{if $shopData.set eq 0}
+								否
+								{else /}
+								是
+								{/if}
+							</td>
+							<td>
+								库存：{$shopData.stock}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								语种：{$shopData.language}
+							</td>
+							<td>
+								字数：{$shopData.word_count}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								页数：{$shopData.page_count}
+							</td>
+							<td>
+								装帧：{$shopData.binding}
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<!-- 购买数量 -->
+			<div class="shop-view-buy">
+				<div class="form-inline">
+					<label>购买数量：</label>
+					<button class="btn btn-sm btn-default" onclick="shopBuyNum('-')">-</button>
+					<input type="number" name="shop_buy_num" value="1" class="form-control" style="width: 80px;">
+					<button class="btn btn-sm btn-default" onclick="shopBuyNum('+')">+</button>
+					<button class="join-cart" id="join-cart" onclick="addCart({$userArr.user_id},{$shopData.good_id})">
+						<img src="http://{$_SERVER['HTTP_HOST']}/static/img/shopping-cart.png" width="22px;">&nbsp;&nbsp;&nbsp;加入购物车
+					</button>
+					<button class="now-buy" id="now-buy">立即购买</button>
+				</div>
+			</div>
+			<!-- 商品详情 -->
+			<div class="shop-view-details">
+				<div class="shop-view-details-title ">
+					商品详情
+				</div>
+				<div class="shop-view-details-box">
+					{$shopData.details}
+				</div>
+				<div class="shop-view-details-title">
+					商品评论
+				</div>
+				<div class="shop-view-details-comment">
+					<!-- 分数浏览 -->
+					<div class="shop-view-details-comment-look-point">
+						<label>按分数浏览：</label>
+						<span class="badge" src="{:url('index/shop/fractiontoclick',['fraction'=>1,'shopid'=>$shopData.good_id])}" onclick="fractionToClick(1,{$shopData.good_id},this)">1分</span>
+						<span class="badge" src="{:url('index/shop/fractiontoclick',['fraction'=>2,'shopid'=>$shopData.good_id])}" onclick="fractionToClick(2,{$shopData.good_id},this)">2分</span>
+						<span class="badge" src="{:url('index/shop/fractiontoclick',['fraction'=>3,'shopid'=>$shopData.good_id])}" onclick="fractionToClick(3,{$shopData.good_id},this)">3分</span>
+						<span class="badge" src="{:url('index/shop/fractiontoclick',['fraction'=>4,'shopid'=>$shopData.good_id])}" onclick="fractionToClick(4,{$shopData.good_id},this)">4分</span>
+						<span class="badge" src="{:url('index/shop/fractiontoclick',['fraction'=>5,'shopid'=>$shopData.good_id])}" onclick="fractionToClick(5,{$shopData.good_id},this)">5分</span>
+						
+					</div>
+					<ul id="comment">
+						{volist name="commentData" id="comment"}
+						<li>
+							<!-- 头像 -->
+							<div class="shop-view-details-comment-pic">
+								<img src="{$comment.head_pic}" width="100%">
+							</div>
+							<div class="shop-view-details-comment-content">
+								<!-- 昵称 -->
+								<div class="shop-view-details-comment-content-title">
+									{$comment.nickname}<span class="shop-view-details-comment-point">{$comment.fraction}分</span>
+								</div>
+								<!-- 评论内容 -->
+								<div class="shop-view-details-comment-content-content">
+									{$comment.content}
+								</div>
+							</div>
+						</li>
+						{/volist}
+					</ul>
+					<!-- 查看更多 -->
+					<div class="shop-view-comment-look-more">
+						<a href="">
+							查看更多>>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{include file="../template/index/base/footer.html"}
+<!-- 图片放大镜js -->
+<script type="text/javascript" src="http://{$_SERVER['HTTP_HOST']}/static/style/jzoom.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('.shop-view-pic-zhu').jzoom();
+	})
+</script>

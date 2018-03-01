@@ -12,10 +12,17 @@ use think\Cookie;
 class Login extends Controller {
 	public function index(){
 		// 如果有有session -> user_id则跳转到用户中心
-		if(Session::has('user_id')){
+		if(Session::has('user_info')){
 			$this->redirect(url('index/user/index'));
 		}
 
+		// 获取meta
+		$meta 	=	getMeta('login');
+		// 获取所有分类(header)
+		$allCate 	=	getCateForIndexA();
+
+		$this->assign('meta',$meta);
+		$this->assign('allCate',$allCate);
 		return view();
 	}
 	/*
@@ -55,9 +62,10 @@ class Login extends Controller {
 		
 		// 如果有此用户 验证密码是否正确
 		if($findUserName){
+			$findUserName 	=	$findUserName->toArray();
 			if($findUserName['password'] == md5($userpass)){
 				// 设置session
-				Session::set('user_id',$findUserName['user_id']);
+				Session::set('user_info',$findUserName);
 
 				$this->success('登录成功');
 			}
@@ -70,6 +78,15 @@ class Login extends Controller {
 		if(Session::has('user_id')){
 			header('location='.url('index/user/index'));
 		}
+
+		// 获取cate (header)
+		$allCate 	=	getCateForIndexA();
+		// 获取meta
+		$meta 		=	getMeta('reg','','','');
+
+
+		$this->assign('allCate',$allCate);
+		$this->assign('meta',$meta);
 		return view();
 	}
 	/*	注册验证	*/
@@ -203,10 +220,11 @@ class Login extends Controller {
 	public function login_out(){
 
 		// 删除作用域
-		Session::delete('user_id');
+		Session::delete('user_info');
+		Cookie::delete('user_info');
 
 		// 成功后跳转到首页
-		header('location:'.url('index/index/index'));
+		$this->redirect(url('index/index/index'));
 	}
 	/*	用户锁定后显示此界面	*/
 	public function lock(){

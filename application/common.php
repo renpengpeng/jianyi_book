@@ -388,7 +388,7 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 	// 根据$index 来生成robots
 	switch ($index) {
 		case '':
-			$robots 	=	'robots';
+			$robots 	=	'all';
 		break;
 
 		case 0:
@@ -412,7 +412,7 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 		break;
 
 		default:
-			$robots 	=	'index';
+			$robots 	=	'all';
 		break;
 	}
 	/*
@@ -435,7 +435,7 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 			$listAllInfo 	=	$setting['listall_meta'];
 
 			// 分割为数组
-			$listAllArr 	=	explode(',', $listAllInfo);
+			$listAllArr 	=	explode('%', $listAllInfo);
 
 			// 拼接标题
 			if($otherTitleType == 0){
@@ -474,6 +474,57 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 				$keywords 		=	$cateArr['keywords'];
 				$description 	=	$cateArr['description'];
 			}
+
+			case 'login':
+				// 获取数据库内信息
+				$login 			=	$setting['login_meta'];
+
+				// 分割数组
+				$loginArr 		=	explode('%', $login);
+
+				// 拼接标题
+				if($otherTitleType == 0){
+					$title 		=	$loginArr[0].$webTitleLine.$webTitle;
+				}else{
+					$title 		=	$loginArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
+				}
+				$keywords 		=	$loginArr[1];
+				$description 	=	$loginArr[2];
+			break;
+
+			case 'reg':
+				// 获取数据库内信息
+				$reg 			=	$setting['reg_meta'];
+
+				// 分割数组
+				$regArr 		=	explode('%', $reg);
+
+				// 拼接标题
+				if($otherTitleType == 0){
+					$title 		=	$regArr[0].$webTitleLine.$webTitle;
+				}else{
+					$title 		=	$regArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
+				}
+				$keywords 		=	$regArr[1];
+				$description 	=	$regArr[2];
+
+			break;
+
+			case 'user':
+				// 获取信息
+				$user 			=	$setting['user_meta'];
+
+				$userArr 		=	explode('%', $user);
+
+				// 拼接标题
+				if($otherTitleType == 0){
+					$title 		=	$userArr[0].$webTitleLine.$webTitle;
+				}else{
+					$title 		=	$userArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
+				}
+				$keywords 		=	$userArr[1];
+				$description 	=	$userArr[2];
+			break;
 		break;
 		default:
 			
@@ -537,3 +588,8 @@ function getListSidebar(){
 
 	return $result;
 }
+/*
+	*	获取公共参数
+	*	commonData 包含：headerCate 		->	页面头部菜单
+
+*/

@@ -27,7 +27,7 @@
  		<a href="#">收藏本站</a>
  	</div>
  	<div class="common-nav-top-right">
- 		{if condition="$Think.session.user_id neq null"}
+ 		{if condition="$Think.session.user_info neq null"}
  			<a href="{:url('index/user/order')}">我的订单</a>
  			<a href="{:url('index/login/login_out')}">退出登录</a>
  		{else /}
@@ -83,3 +83,5 @@
 <div class="container-fluid common-nav-cate">
 	{$allCate}
 </div>
+<!-- 提示框 -->
+<div class="alert alert-warning tip-alert"></div>

@@ -1,0 +1,18 @@
+{volist name="commentData" id="comment"}
+	<li>
+							<!-- 头像 -->
+							<div class="shop-view-details-comment-pic">
+								<img src="{$comment.head_pic}" width="100%">
+							</div>
+							<div class="shop-view-details-comment-content">
+								<!-- 昵称 -->
+								<div class="shop-view-details-comment-content-title">
+									{$comment.nickname}<span class="shop-view-details-comment-point">{$comment.fraction}分</span>
+								</div>
+								<!-- 评论内容 -->
+								<div class="shop-view-details-comment-content-content">
+									{$comment.content}
+								</div>
+							</div>
+						</li>
+{/volist}

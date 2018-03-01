@@ -146,7 +146,7 @@ class Lists extends Controller {
 		}
 	}
 	public function test(){
-		
+		dump(getMeta('login','','',''));
 	}
 
 }
