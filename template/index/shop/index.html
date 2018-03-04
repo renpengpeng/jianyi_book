@@ -128,7 +128,7 @@
 					<button class="join-cart" id="join-cart" onclick="addCart({$userArr.user_id},{$shopData.good_id})">
 						<img src="http://{$_SERVER['HTTP_HOST']}/static/img/shopping-cart.png" width="22px;">&nbsp;&nbsp;&nbsp;加入购物车
 					</button>
-					<button class="now-buy" id="now-buy">立即购买</button>
+					<a class="now-buy" id="now-buy" style="display: inline-block;" href="{:url('index/order/index',['good_id'=>$shopData.good_id])}" onclick="return shopBuy(this)">立即购买</a>
 				</div>
 			</div>
 			<!-- 商品详情 -->

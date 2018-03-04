@@ -38,9 +38,10 @@ class Search extends Controller {
 		if($search){
 			$search 		=	$search->toArray();
 			$searchCount 	=	count($search);
-			if(ceil($searchCount/$indexListShowNum) < $page){
-			$this->redirect(url('index/index/cavaet',['msg'=>'超出限制的page']));
-				
+			if($page > 1){
+				if(ceil($searchCount / $indexListShowNum) < $page){
+					$this->redirect(url('index/index/cavaet',['msg'=>'超出限制的page']));
+				}
 			}
 		}else{
 			$searchCount 	= 	0;

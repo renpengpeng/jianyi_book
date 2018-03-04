@@ -1,0 +1,52 @@
+{include file="../template/index/base/header.html"}
+<div class="container index-box">
+	<div class="alert alert-danger">未对接支付接口，支付功能关闭，暂时支持加入订单库！</div>
+	<div class="index-box-title">购买商品</div>
+	<div class="order-shop">
+		<div class="col-md-3">
+			<img src="{$goodMessage.main_img}" width="100%">
+		</div>
+		<div class="col-md-9">
+			<div class="order-shop-title">
+				{$goodMessage.title}
+			</div>
+			<span style="float: right;color: #ff0000;">
+				¥{$goodMessage.price}
+			</span>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+	<div class="index-box-title">购买数量</div>
+	<div class="order-buy">
+		购买数量：<input type="number" class="form-control" value="{$buyNum}">
+	</div>
+	<div class="clearfix"></div>
+	<div class="index-box-title">收货地址</div>
+	<div class="order-buy">
+		<select name="address" class="form-control">
+			{if $address neq ''}
+				{volist name="address" id="address"}
+					<option name="{$address.address_id}">{$address.province}&nbsp;&nbsp;{$address.city}&nbsp;&nbsp;{$address.district}&nbsp;&nbsp;{$address.address}</option>
+				{/volist}
+			{else /}
+				<a href="{:url('index/user/address')}">创建收货地址</a>
+			{/if}
+		</select>
+	</div>
+	<div class="clearfix"></div>
+	<div class="index-box-title">需支付</div>
+	<div class="order-buy-price">
+		¥{$buyPrice}
+	</div>
+	<div class="clearfix"></div>
+	<div class="index-box-title">支付方式</div>
+	<div class="order-buy-type">
+		<input type="radio" name="buy_type" value="0">支付宝
+		<input type="radio" name="buy_type" value="1">微信
+	</div>
+	<div class="order-buy-button">
+		<a href="" class="btn btn-warning">放弃购买</a>
+		<a href="" class="btn btn-success" onclick="return buyBeign();">立即购买</a>
+	</div>
+</div>
+{include file="../template/index/base/footer.html"}
