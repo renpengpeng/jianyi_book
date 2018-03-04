@@ -52,8 +52,10 @@
  	</div>
  	<!-- 搜索框 -->
  	<div class="col-md-4 common-nav-logo-sousuo">
- 		<input type="text" name="index-so" class="common-nav-logo-sousuo-input">
- 		<button class="common-nav-logo-sousuo-button">搜索</button>
+ 		<form action="{:url('index/search/index')}" method="get">
+ 			<input type="text" name="keywords" class="common-nav-logo-sousuo-input">
+ 			<button class="common-nav-logo-sousuo-button" id="header-search">搜索</button>
+ 		</form>
  	</div>
  	<!-- 用户信息 -->
  	<div class="col-md-4 common-nav-logo-user">

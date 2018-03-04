@@ -37,14 +37,20 @@ class User extends Controller {
 		// 获取一些信息
 			// 获取用户信息
 			$userMessage 	= 	Model('BookUsers')->where('user_id',USERID)->find();
+
 			// 查询订单数量
 			$userOrders		=	Model('BookOrders')->where('user_id',USERID)->count();
+			// 查询收货地址数量
+			$userAddress 	=	Model('BookAddress')->where('user_id',USERID)->count();
+
 
 		// 赋值信息
 			// 赋值用户信息
 			$this->assign('userMessage',$userMessage);
 			// 赋值订单 数量
 			$this->assign('countOrder',$userOrders);
+			// 赋值收货地址数量
+			$this->assign('userAddress',$userAddress);
 
 
 		return view();
@@ -163,11 +169,11 @@ class User extends Controller {
 	*/
 	public function cart_del(){
 		if(!input('?post.id')){
-			return json(['code'=>0,'msg'=>'参数错误']);
+			return $this->error('参数错误');
 		}else{
 			$id 	=	input('post.id');
 			if(!is_numeric($id)){
-				return json(['code'=>0,'msg'=>'参数错误']);
+				return $this->error('参错错误');
 			}
 		}
 
@@ -175,9 +181,9 @@ class User extends Controller {
 		$delCart 	=	Model('BookCarts')->where('cart_id',$id)->delete();
 
 		if($delCart){
-			return json(['code'=>1,'msg'=>'删除成功']);
+			return $this->success('删除成功');
 		}else{
-			return json(['code'=>0,'msg'=>'删除失败']);
+			return $this->error('删除失败');
 		}
 	}
 	/*
@@ -215,6 +221,211 @@ class User extends Controller {
 	*/
 	public function pass_modify(){
 		return view();
+	}
+	/*
+		*	密码修改数据处理
+	*/
+	public function pass_modify_with(){
+		$data 	=	input('post.');
+		if(!$data['password'] || !$data['newPass'] || !$data['newPassOne']){
+			return $this->error('请填写完整');
+		}
+
+		// 查找用户数据
+		$userMessage 	=	Model('BookUsers')->get(USERID);
+
+		// 如果用户状态
+		if($userMessage){
+			$userMessage 	=	$userMessage->toArray();
+		}else{
+			Session::delete('user_info');
+			return $this->success('不存在的用户');
+		}
+
+		// 开始判断长度
+		if(strlen($data['newPass']) > 16){
+			return $this->error('密码长度过长');
+		}
+
+		if(strlen($data['newPass']) < 5){
+			return $this->error('密码长度过短');
+		}
+
+		if(!preg_match("/^[a-zA-Z0-9]+$/", $data['newPass'])){
+			return $this->error('密码只能为字母或者数字');
+		}
+
+		// 对比密码是否正确
+		if(md5($data['password']) != $userMessage['password']){
+			return $this->error('原密码错误');
+		}
+
+		if($data['newPassOne'] != $data['newPass']){
+			return $this->error('两次密码不相同');
+		}
+
+		// 开始更新数据
+		$update 	=	Model('BookUsers')->where('user_id',USERID)->update(['password'=>md5($data['newPass'])]);
+
+		if($update){
+			Session::delete('user_info');
+			return $this->success('修改密码成功');
+		}else{
+			return $this->error('修改密码失败');
+		}
+	}
+	/*
+		*	收货地址管理
+	*/
+	public function address(){
+
+		// 根据用户Id来查询收货地址
+		$addressData 		=	Model('BookAddress')
+									->where('user_id',USERID)
+									->order('address_id desc')
+									->select();
+
+		$this->assign('addressData',$addressData);
+		return view();
+	}
+	/*
+		*	设置收货地址为默认
+	*/
+	public function address_default(){
+		if(input('?post.id')){
+			$id 	=	input('post.id');
+			// 检测是否为数字
+			if(!is_numeric($id)){
+				return json(['code'=>0,'msg'=>'请填写完整']);
+			}
+		}
+
+		// 查询收货地址是否存在
+		$hasAddress 	=	Model('BookAddress')->get($id);
+
+		if(!$hasAddress){
+			return json(['code'=>0,'msg'=>'收货地址不存在']);
+		}else{
+			$hasAddress 	=	$hasAddress->toArray();
+			// 如果收货地址已经是默认 终止
+			if($hasAddress['default'] == 1){
+				return json(['code'=>0,'msg'=>'已经是默认']);
+			}
+		}
+
+		// 检测是否属于此用户
+		if($hasAddress['user_id'] != USERID){
+			return json(['code'=>0,'msg'=>'参数错误']);
+		}
+
+		// 检测此用户是否有默认收货地址 
+		// 如果有 则去除之前的默认地址 设此为默认
+		$elseAddress 	=	Model('BookAddress')
+								->where([
+									'user_id' 	=> 	USERID,
+									'default' 	=>	1
+								])
+								->find();
+		if($elseAddress){
+			$elseAddress 	=	$elseAddress->toArray();
+			$updateElse 	=	Model('BookAddress')->where('address_id',$elseAddress['address_id'])->update(['default'=>0]);
+			if(!$updateElse){
+				return json(['code'=>0,'msg'=>'设置默认失败']);
+			}
+		}
+
+		// 开始设收货地址
+		$updateAddress 	=	Model('BookAddress')->where('address_id',$id)->update(['default'=>1]);
+		if(!$updateAddress){
+			return json(['code'=>0,'msg'=>'设置默认失败']);
+		}else{
+			return json(['code'=>1,'msg'=>'设置默认成功']);
+		}
+
+	}
+	/*
+		*	删除收货地址
+	*/
+	public function address_del(){
+		if(input('?post.id')){
+			$id 	=	input('post.id');
+			// 检测是否为数字
+			if(!is_numeric($id)){
+				return json(['code'=>0,'msg'=>'参数错误']);
+			}
+		}
+
+		// 查询收货地址是否存在
+		$hasAddress 	=	Model('BookAddress')->get($id);
+		if($hasAddress){
+			$hasAddress 	=	$hasAddress->toArray();
+		}else{
+			return json(['code'=>0,'msg'=>'收货地址不存在']);
+		}
+
+		// 检测是否属于此用户
+		if($hasAddress['user_id'] != USERID){
+			return json(['code'=>0,'msg'=>'参数错误']);
+		}
+
+		// 开始删除
+		$del 	= 	Model('BookAddress')->where('address_id',$id)->delete();
+
+		if($del){
+			return json(['code'=>1,'msg'=>'删除成功']);
+		}else{
+			return json(['code'=>0,'msg'=>'删除失败']);
+		}
+	}
+	/*
+		*	添加收货地址
+	*/
+	public function address_new(){
+		// 判断收货地址数量 不能超过5个
+		$addressCount 	=	Model('BookAddress')->where('user_id',USERID)->count();
+		if($addressCount >= 5){
+			return $this->error('收货地址达到最大限制');
+		}
+
+		$data 	=	input('post.');
+		
+		if(!$data['province'] || !$data['city'] || !$data['address']){
+			return $this->error('请填写完整');
+		}
+
+		// 如果市区等于0证明市区参数没有选择
+		if(!$data['district']){
+			return $this->error('县(区) 参数没有选择');
+		}
+
+		$data['address'] 	=	htmlspecialchars($data['address']);
+
+		// 添加会员信息
+		$data['user_id'] 	=	USERID;
+
+		// 判断邮政编码
+		if(isset($data['code'])){
+			if(empty($data['code'])){
+				$data['code'] 	=	'000000';
+			}else{
+				if(strlen($data['code']) != 6){
+					return $this->error('邮政编码长度不符(可不填)');
+				}
+			}
+		}
+
+		// 添加时间戳
+		$data['create_time'] 	=	@time();
+
+		// 开始添加
+		$beginInsert 	=	Model('BookAddress')->insert($data);
+
+		if($beginInsert){
+			return $this->success('收货地址添加成功');
+		}else{
+			return $this->error('收货地址添加失败');
+		}
+
 	}
 	/*
 		*	当用户被锁定， 出现此页面

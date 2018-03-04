@@ -49,7 +49,7 @@ class Login extends Controller {
 
 		// 验证验证码是否正确
 		if(!captcha_check($yzm)){
-			$this->error('验证码错误');
+			return $this->error('验证码错误');
 		}
 
 		// 查找是否有此用户名(用户名唯一)
@@ -67,10 +67,12 @@ class Login extends Controller {
 				// 设置session
 				Session::set('user_info',$findUserName);
 
-				$this->success('登录成功');
+				return $this->success('登录成功');
+			}else{
+				return $this->error('密码错误');
 			}
 		}else{
-			$this->error('没有此用户');
+			return $this->error('没有此用户');
 		}
 	}
 	public function reg(){

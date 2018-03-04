@@ -1,0 +1,75 @@
+{include file="../template/index/base/header.html"}
+<div class="container index-box">
+	{include file="../template/index/base/user-sidebar.html"}
+
+	<div class="col-md-8">
+		<div class="index-box-title">
+			收货地址管理
+			<span style="float: right;font-size: 14px;color: #0068b7;cursor: pointer;" onclick="addressNewShow();">
+					添加收货地址
+			</span>
+		</div>
+		<div class="address_new form-inline" style="text-align: center;display: none;">
+			<fieldset id="city_china_val">
+				<p>所在地区：
+					<select class="province cxselect form-control" data-value="请选择" data-first-title="选择省" disabled="disabled" name="province"></select>
+					<select class="city cxselect form-control" data-value="请选择" data-first-title="选择市" disabled="disabled" name="city"></select>
+					<select class="area cxselect form-control" data-value="请选择" data-first-title="选择地区" disabled="disabled" name="district"></select>
+				</p>
+				<p>
+					邮政编码：
+					<input type="number" name="code" class="form-control">
+				</p>
+				<p>
+					详细地址：
+					<textarea class="form-control" name="address"></textarea>
+				</p>
+				<p>
+					<input type="submit" value="添加" class="btn btn-success" style="width: 100px;" onclick="addressNew()">
+				</p>
+			</fieldset>
+		</div>
+		<table class="table table-bordered" style="text-align: center;">
+			<tr>
+				<th>默认</th>
+				<th>省份</th>
+				<th>市区</th>
+				<th>县(区)</th>
+				<th>详细地址</th>
+				<th>邮编</th>
+				<th>操作</th>
+			</tr>
+			{volist name="addressData" id="addressData"}
+			<tr>
+				<td>
+				{if $addressData.default eq 1}
+					<img src="http://{$_SERVER['HTTP_HOST']}/static/img/address-yes.png" width="30">
+				{else /}
+					<img src="http://{$_SERVER['HTTP_HOST']}/static/img/address-no.png" width="30">
+				{/if}
+				</td>
+				<td>{$addressData.province}</td>
+				<td>{$addressData.city}</td>
+				<td>{$addressData.district}</td>
+				<td>{$addressData.address}</td>
+				<td>{$addressData.code}</td>
+				<td>
+					<button class="btn btn-sm btn-success" onclick="addressDefault({$addressData.address_id});">设为默认</button>
+					<button class="btn btn-sm btn-warning">修改</button>
+					<button class="btn btn-sm btn-danger" onclick="addressDel({$addressData.address_id});">删除</button>
+				</td>
+			</tr>
+			{/volist}
+		</table>
+	</div>
+</div>
+{include file="../template/index/base/footer.html"}
+	<!-- 引入添加收货地址所需文件 -->
+<script src="http://{$_SERVER['HTTP_HOST']}/static/style/jquery.cxselect.min.js"></script>
+<script type="text/javascript">
+	$.cxSelect.defaults.url = 'http://{$_SERVER["HTTP_HOST"]}/static/style/cityData.min.json';
+$('#city_china_val').cxSelect({
+	selects: ['province', 'city', 'area'],
+	nodata: 'none'
+});
+</script>

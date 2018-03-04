@@ -2,8 +2,28 @@
 <div class="container" style="margin-top:10px; margin-bottom: 10px;">
 	{include file="../template/index/base/user-sidebar.html"}
 	<div class="col-md-8">
-		密码修改
-		
+		<div class="index-box-title">
+			密码修改
+		</div>
+		<div class="pass-modify-box">
+			<form action="{:url('index/user/pass_modify_with')}" method="post" onsubmit="return userPassModifyForm(this);">
+				<div class="form-group">
+					<label>原密码：</label>
+					<input type="password" name="yuan_password" class="form-control" value="" placeholder="在此输入原密码">
+				</div>
+				<div class="form-group">
+					<label>新密码：</label>
+					<input type="password" name="new_password" class="form-control" placeholder="在此输入新密码">
+				</div>
+				<div class="form-group">
+					<label>再次输入：</label>
+					<input type="password" name="new_password_1" class="form-control" placeholder="再次输入新密码">
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-success" value="修改">
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
 {include file="../template/index/base/footer.html"}

@@ -461,71 +461,89 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 
 		case 'list':
 			// 通过ID获取分类信息
-			$cateArr 		=	Model('BookCates')->get($id);
+			$cateArr 		=	Model('BookCates')->get($id)->toArray();
 
-			if($cateArr){
-				// 拼接标题
-				if($otherTitleType == 0){
-					$title 	=	$cateArr['cate_name'].$webTitleLine.$webTitle;
-				}else{
-					$title 	=	$cateArr['cate_name'].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
-				}
 
-				$keywords 		=	$cateArr['keywords'];
-				$description 	=	$cateArr['description'];
+			// 拼接标题
+			if($otherTitleType == 0){
+				$title 	=	$cateArr['cate_name'].$webTitleLine.$webTitle;
+			}else{
+				$title 	=	$cateArr['cate_name'].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
 			}
 
-			case 'login':
-				// 获取数据库内信息
-				$login 			=	$setting['login_meta'];
+			$keywords 		=	$cateArr['keywords'];
+			$description 	=	$cateArr['description'];
 
-				// 分割数组
-				$loginArr 		=	explode('%', $login);
 
-				// 拼接标题
-				if($otherTitleType == 0){
-					$title 		=	$loginArr[0].$webTitleLine.$webTitle;
-				}else{
-					$title 		=	$loginArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
-				}
-				$keywords 		=	$loginArr[1];
-				$description 	=	$loginArr[2];
-			break;
+		
+			$keywords 		=	$cateArr['cate_name'];
+			$description 	=	'';
 
-			case 'reg':
-				// 获取数据库内信息
-				$reg 			=	$setting['reg_meta'];
-
-				// 分割数组
-				$regArr 		=	explode('%', $reg);
-
-				// 拼接标题
-				if($otherTitleType == 0){
-					$title 		=	$regArr[0].$webTitleLine.$webTitle;
-				}else{
-					$title 		=	$regArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
-				}
-				$keywords 		=	$regArr[1];
-				$description 	=	$regArr[2];
-
-			break;
-
-			case 'user':
-				// 获取信息
-				$user 			=	$setting['user_meta'];
-
-				$userArr 		=	explode('%', $user);
-
-				// 拼接标题
-				if($otherTitleType == 0){
-					$title 		=	$userArr[0].$webTitleLine.$webTitle;
-				}else{
-					$title 		=	$userArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
-				}
-				$keywords 		=	$userArr[1];
-				$description 	=	$userArr[2];
-			break;
 		break;
+		case 'login':
+			// 获取数据库内信息
+			$login 			=	$setting['login_meta'];
+
+			// 分割数组
+			$loginArr 		=	explode('%', $login);
+
+			// 拼接标题
+			if($otherTitleType == 0){
+				$title 		=	$loginArr[0].$webTitleLine.$webTitle;
+			}else{
+				$title 		=	$loginArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
+			}
+
+		case 'reg':
+			// 获取数据库内信息
+			$reg 			=	$setting['reg_meta'];
+
+			// 分割数组
+			$regArr 		=	explode('%', $reg);
+
+			// 拼接标题
+			if($otherTitleType == 0){
+				$title 		=	$regArr[0].$webTitleLine.$webTitle;
+			}else{
+				$title 		=	$regArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
+			}
+			$keywords 		=	$regArr[1];
+			$description 	=	$regArr[2];
+
+		break;
+
+		case 'user':
+			// 获取信息
+			$user 			=	$setting['user_meta'];
+
+			$userArr 		=	explode('%', $user);
+
+			// 拼接标题
+			if($otherTitleType == 0){
+				$title 		=	$userArr[0].$webTitleLine.$webTitle;
+			}else{
+				$title 		=	$userArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
+			}
+			$keywords 		=	$userArr[1];
+			$description 	=	$userArr[2];
+		break;
+
+		case 'shop' :
+			// 获取商品id
+			$shopArr 	=	Model('BookGoods')->get($id)->toArray();
+			// 拼接关键参数
+			$pivotal 	=	"作者：{$shopArr['author']}  出版社：{$shopArr['press']}  共{$shopArr['word_count']}字";
+			
+			// 拼接标题
+			if($otherTitleType == 0){
+				$title 		=	$shopArr['title'].$webTitleLine.$pivotal.$webTitleLine.$webTitle;
+			}else{
+				$title 		=	$shopArr['title'].$webTitleLine.$pivotal.$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
+			}
+			$keywords 		=	$shopArr['title'].','.$shopArr['author'].','.$shopArr['language'];
+			$description 	=	"{$shopArr['title']}的作者为{$shopArr['author']},买正版图书，就上{$webTitle}";
+		break;
+
 		default:
 			
 		break;

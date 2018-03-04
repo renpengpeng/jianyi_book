@@ -40,6 +40,29 @@
 	$(document).ready(function(){
  
     $("#theTarget").skippr();
+
+    // // 当点击搜索时
+    // $(document).delegate('#header-search','click',function(){
+    // 	// 获取搜索框内的文字
+    // 	var searchVal 	=	$('input[name="header_so_input"]').val();
+
+    // 	// 判断如果为空则不执行 否则base64编码
+    // 	if(searchVal == ''){
+    // 		return false;
+    // 	}else{
+    // 		var bse  	= 	new Base64();
+    // 		searchVal 	=	bse.encode(searchVal);
+
+    // 		// 生成跳转url
+    // 		var locaUrl 	=	"/search/" + searchVal;
+    // 		alert(locaUrl);return false;
+
+    // 		// 开始跳转
+    // 		window.location.href 	=	window.location.href;
+    // 	}
+
+
+    // });
  
 });   
 </script>

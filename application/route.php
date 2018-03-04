@@ -19,3 +19,9 @@
 //     ],
 
 // ];
+
+use think\Route;
+
+Route::rule([
+	'shop/:id' 	=>	'index/shop/index'
+]);

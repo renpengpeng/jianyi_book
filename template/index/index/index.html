@@ -4,11 +4,11 @@
  -->
  <div class="container-fluid index-banner">
     <div id="theTarget">
-        <div style="background-image: url(https://i1.mifile.cn/a4/xmad_15192945916761_ormJz.jpg)"></div>
-        <div style="background-image: url(https://i1.mifile.cn/a4/xmad_15185161540821_qPMoX.jpg)"></div>
-        <div style="background-image: url(https://i1.mifile.cn/a4/T1o2C_Bbhv1RXrhCrK.jpg)"></div>
-        <div style="background-image: url(https://i1.mifile.cn/a4/xmad_15192945916761_ormJz.jpg)"></div>
-        <div style="background-image: url(https://i1.mifile.cn/a4/xmad_15163680694492_lYFdq.jpg)"></div> 
+      {volist name="banner" id="banner"}
+          <div style="background-image: url({$banner.0})" onclick="window.location.href='{$banner.1}'" style="cursor: pointer;">
+          </div>
+      {/volist}
+
 </div>    
  </div>
  <!-- 
@@ -19,7 +19,7 @@
   	<div class="index-floor">
   		<!-- 标题 -->
   		<div class="index-floor-title">
-  			楼层1
+        最新上架
   			<span class="index-floor-title-right">
   				<a href="#">查看更多>></a>
   			</span>
@@ -27,156 +27,58 @@
   		<!-- 列表 -->
   		<div class="index-floor-list">
   			<ul>
+          {volist name="newData" id="newData"}
   				<li>
-  					<a href="#">
-  						<div class="index-floor-img">
-  							<img src="http://demo.haidao.la/uploadfile/goods/a2/29/e3/0f/59c14da8803ce_thumb_500_500.jpg">
+  					<a href="{:url('index/shop/index',['id'=>$newData.good_id])}">
+  						<div class="index-floor-img" style="display: inline-block;">
+  							<img src="{$newData.main_img}" height="100%" width="100%">
   						</div>
   						<div class="index-floor-list-title">
-  							标题
+  							{$newData.title}
   						</div>
   						<div class="index-floor-list-price">
-  							￥100.00
+  							￥{$newData.price}
   						</div>
   					</a>
   				</li>
-  				<li>
-  					<a href="#">
-  						<div class="index-floor-img">
-  							<img src="http://demo.haidao.la/uploadfile/goods/a2/29/e3/0f/59c14da8803ce_thumb_500_500.jpg">
-  						</div>
-  						<div class="index-floor-list-title">
-  							标题
-  						</div>
-  						<div class="index-floor-list-price">
-  							￥100.00
-  						</div>
-  					</a>
-  				</li>
-  				<li>
-  					<a href="#">
-  						<div class="index-floor-img">
-  							<img src="http://demo.haidao.la/uploadfile/goods/a2/29/e3/0f/59c14da8803ce_thumb_500_500.jpg">
-  						</div>
-  						<div class="index-floor-list-title">
-  							标题
-  						</div>
-  						<div class="index-floor-list-price">
-  							￥100.00
-  						</div>
-  					</a>
-  				</li>
-  				<li>
-  					<a href="#">
-  						<div class="index-floor-img">
-  							<img src="http://demo.haidao.la/uploadfile/goods/a2/29/e3/0f/59c14da8803ce_thumb_500_500.jpg">
-  						</div>
-  						<div class="index-floor-list-title">
-  							标题
-  						</div>
-  						<div class="index-floor-list-price">
-  							￥100.00
-  						</div>
-  					</a>
-  				</li>
-  				<li>
-  					<a href="#">
-  						<div class="index-floor-img">
-  							<img src="http://demo.haidao.la/uploadfile/goods/a2/29/e3/0f/59c14da8803ce_thumb_500_500.jpg">
-  						</div>
-  						<div class="index-floor-list-title">
-  							标题
-  						</div>
-  						<div class="index-floor-list-price">
-  							￥100.00
-  						</div>
-  					</a>
-  				</li>
+          {/volist}
   			</ul>
   		</div>
   	</div>
-  	<div class="clearfix"></div>
-  	<!-- 楼层2 -->
-  	<div class="index-floor">
-  		<!-- 标题 -->
-  		<div class="index-floor-title">
-  			楼层1
-  			<span class="index-floor-title-right">
-  				<a href="#">查看更多>></a>
-  			</span>
-  		</div>
-  		<!-- 列表 -->
-  		<div class="index-floor-list">
-  			<ul>
-  				<li>
-  					<a href="#">
-  						<div class="index-floor-img">
-  							<img src="http://demo.haidao.la/uploadfile/goods/a2/29/e3/0f/59c14da8803ce_thumb_500_500.jpg">
-  						</div>
-  						<div class="index-floor-list-title">
-  							标题
-  						</div>
-  						<div class="index-floor-list-price">
-  							￥100.00
-  						</div>
-  					</a>
-  				</li>
-  				<li>
-  					<a href="#">
-  						<div class="index-floor-img">
-  							<img src="http://demo.haidao.la/uploadfile/goods/a2/29/e3/0f/59c14da8803ce_thumb_500_500.jpg">
-  						</div>
-  						<div class="index-floor-list-title">
-  							标题
-  						</div>
-  						<div class="index-floor-list-price">
-  							￥100.00
-  						</div>
-  					</a>
-  				</li>
-  				<li>
-  					<a href="#">
-  						<div class="index-floor-img">
-  							<img src="http://demo.haidao.la/uploadfile/goods/a2/29/e3/0f/59c14da8803ce_thumb_500_500.jpg">
-  						</div>
-  						<div class="index-floor-list-title">
-  							标题
-  						</div>
-  						<div class="index-floor-list-price">
-  							￥100.00
-  						</div>
-  					</a>
-  				</li>
-  				<li>
-  					<a href="#">
-  						<div class="index-floor-img">
-  							<img src="http://demo.haidao.la/uploadfile/goods/a2/29/e3/0f/59c14da8803ce_thumb_500_500.jpg">
-  						</div>
-  						<div class="index-floor-list-title">
-  							标题
-  						</div>
-  						<div class="index-floor-list-price">
-  							￥100.00
-  						</div>
-  					</a>
-  				</li>
-  				<li>
-  					<a href="#">
-  						<div class="index-floor-img">
-  							<img src="http://demo.haidao.la/uploadfile/goods/a2/29/e3/0f/59c14da8803ce_thumb_500_500.jpg">
-  						</div>
-  						<div class="index-floor-list-title">
-  							标题
-  						</div>
-  						<div class="index-floor-list-price">
-  							￥100.00
-  						</div>
-  					</a>
-  				</li>
-  			</ul>
-  		</div>
-  	</div>
-  	<div class="clearfix"></div>
+    <div class="clearfix"></div>
+    <!-- 循环楼层 -->
+    {volist name="getData" id="data"}
+    <div class="index-floor">
+      <!-- 标题 -->
+      <div class="index-floor-title">
+        {$data.title}
+        <span class="index-floor-title-right">
+          <a href="{:url('index/lists/index',['id'=>$data.id])}">查看更多>></a>
+        </span>
+      </div>
+      <!-- 列表 -->
+      <div class="index-floor-list">
+        <ul>
+          {volist name="data.data" id="da"|default="没有产品"}
+          <li>
+            <a href="{:url('index/shop/index',['id'=>$da.good_id])}">
+              <div class="index-floor-img" style="display: inline-block;">
+                <img src="{$da.main_img}" height="100%" width="100%">
+              </div>
+              <div class="index-floor-list-title">
+                {$da.title}
+              </div>
+              <div class="index-floor-list-price">
+                ￥{$da.price}
+              </div>
+            </a>
+          </li>
+          {/volist}
+        </ul>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    {/volist}
   	<!-- 友情链接 -->
   	<div class="index-links">
   		<ul>

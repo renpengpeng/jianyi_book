@@ -12,7 +12,7 @@ class Shop extends Controller {
 		if(Session::has('user_info')){
 			$userArr 	=	Session::get('user_info');
 		}else{
-			$userArr 	=	['user_id',0];
+			$userArr 	=	['user_id'=>0];
 		}
 
 		$this->assign('userArr',$userArr);
@@ -57,7 +57,7 @@ class Shop extends Controller {
 		$hasData['pic5']			=	$fuPicArr[3];
 
 		// 获取meta
-		$meta 			=	getMeta();
+		$meta 			=	getMeta('shop',$id,'','');
 		// 获取所有分类(header)
 		$allCate 		=	getCateForIndexA();
 		// 获取侧边栏数据
