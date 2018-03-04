@@ -71,27 +71,15 @@
 				</div><br>
 				<div class="form-inline">
 					<label>出版日期：</label>
-					<input type="number" name="shop-press-date-year" class="form-control">
-					<label>年</label>
-					<input type="number" name="shop-press-date-month" class="form-control">
-					<label>月</label>
-					<input type="number" name="shop-press-date-day" class="form-control">
-					<label>日</label>
+					<input type="number" name="shop-press-date" class="form-control">
+					<label>印刷日期：</label>
+					<input type="number" name="shop-print-number-date" class="form-control">
 				</div><br> 
 				<div class="form-inline">
 					<label>印次：</label>
 					<input type="text" name="shop-print-number" class="form-control">
 					<label>版次：</label>
 					<input type="text" name="shop-edition" class="form-control">
-				</div><br>
-				<div class="form-inline">
-					<label>印刷日期：</label>
-					<input type="number" name="shop-print-number-date-year" class="form-control">
-					<label>年</label>
-					<input type="number" name="shop-print-number-date-month" class="form-control">
-					<label>月</label>
-					<input type="number" name="shop-print-number-date-day" class="form-control">
-					<label>日</label>
 				</div><br>
 				<div class="form-inline">
 					<label>字数：</label>
@@ -128,9 +116,10 @@
 </div>
 <script type="text/javascript">
 		// 初始化wangEdit
-		var E = window.wangEditor
-		var editor2 = new E('#shop-details')
-		editor2.create()
+		var E = window.wangEditor;
+		var editor2 = new E('#shop-details');
+		editor2.customConfig.uploadImgShowBase64 = true;
+		editor2.create();
 
 </script>
 </body>

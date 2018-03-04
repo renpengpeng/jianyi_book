@@ -160,6 +160,50 @@ class Commodity extends Controller{
 			}
 	}
 	/*
+		*	上传图片内容区域
+	*/
+	public function upload_content(){
+		$file				=	request()->file('myfile');
+
+		if(empty($file)){
+			return json(['code'=>0,'msg'=>'参数缺少']);
+		}
+
+		// 获取系统参数
+		$setting			=	getSetting();
+
+		// 获取上传路径
+		$uploadPath			=	$setting['admin_upload_pic_path'];
+		// 获取最大上传字节
+		$uploadBigSize		=	$setting['upload_pic_big_size'];
+		// 获取可上传的文件后缀
+		$uploadExtType		=	$setting['upload_pic_ext_type'];
+
+		// 移动文件
+			$move = $file->validate(['size'=>$uploadBigSize,'ext'=>$uploadExtType])->move($uploadPath);
+			if($move){
+				// 修改path
+				$uploadPath 		=	str_replace('../public','', $uploadPath);
+
+				// 增加获得文件路径
+				$filePath			=	$move->getSaveName();
+
+				// 修改文件路径
+				$filePath			=	str_replace('\\', '/', $filePath);
+
+				// 拼接完整路径
+				$fileCompletePath	=	$uploadPath.'/'.$filePath;
+
+				// 返回文件完整路径
+				return json([
+					'errno'	=>	0,
+					'data'	=>	[$fileCompletePath],
+				]);
+			}else{
+				return json(['errno'=>1,'data'=>['']]);
+			}
+	}
+	/*
 		*	插入新产品
 	*/
 	public function new_shop(){
@@ -284,8 +328,6 @@ class Commodity extends Controller{
 	*/
 	public function edit_commodity($id){
 
-		// dump($_COOKIE);
-
 		// 获取商品参数
 		$shopMessage 		=	Model('BookGoods')->get($id);
 
@@ -303,14 +345,21 @@ class Commodity extends Controller{
 
 				$fuPicArr 	=	explode(',',$fuPic);
 
+
+
 				// 分别赋值副图
 				Cookie::set('pic2',$fuPicArr[0]);
 				Cookie::set('pic3',$fuPicArr[1]);
 				Cookie::set('pic4',$fuPicArr[2]);
 				Cookie::set('pic5',$fuPicArr[3]);
 
+				dump($_COOKIE);
+
 			// 获取所有分类
 			$allCate	=	adminGetCateForOption();
+
+			// html反转details
+			$shopMessage['details'] 	=	htmlspecialchars_decode($shopMessage['details']);
 
 			// dump($_COOKIE);
 			// 分割出版日期

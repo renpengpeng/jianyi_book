@@ -10,7 +10,7 @@
 			<div class="order-shop-title">
 				{$goodMessage.title}
 			</div>
-			<span style="float: right;color: #ff0000;">
+			<span style="float: right;color: #ff0000;" id='price'>
 				¥{$goodMessage.price}
 			</span>
 		</div>
@@ -18,7 +18,8 @@
 	<div class="clearfix"></div>
 	<div class="index-box-title">购买数量</div>
 	<div class="order-buy">
-		购买数量：<input type="number" class="form-control" value="{$buyNum}">
+		购买数量：<input type="number" class="form-control" name="shop_buy_num" value="{$buyNum}" onchange="">
+		备注：<textarea name="order_user_note" class="form-control"></textarea>
 	</div>
 	<div class="clearfix"></div>
 	<div class="index-box-title">收货地址</div>
@@ -35,7 +36,7 @@
 	</div>
 	<div class="clearfix"></div>
 	<div class="index-box-title">需支付</div>
-	<div class="order-buy-price">
+	<div class="order-buy-price" id="newprice">
 		¥{$buyPrice}
 	</div>
 	<div class="clearfix"></div>

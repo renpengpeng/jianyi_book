@@ -1,0 +1,43 @@
+{include file="../template/admin/base/header.html"}
+<!-- 内容区 -->
+<div class="container-fluid admin-box">
+	{include file="../template/admin/base/sidebar.html"}
+	<div class="col-md-10">
+		<div class="admin-box-title">
+			页面管理	
+		</div>
+		<table class="table table-bordered" style="text-align: center;">
+			<tr>
+				<th>状态</th>
+				<th>标题</th>
+				<th>浏览量</th>
+				<th>操作</th>
+			</tr>
+			{volist name="pageData" id="pageData"}
+			<tr>
+				<td style="width: 50px;">
+					{if $pageData.status eq 1}
+					<img src="http://{$_SERVER['HTTP_HOST']}/static/img/address-yes.png" width="20" height="20">
+					{else /}
+					<img src="http://{$_SERVER['HTTP_HOST']}/static/img/address-no.png" width="20" height="20">
+					{/if}
+				</td>
+				<td>
+					{$pageData.title}
+				</td>
+				<td style="width: 150px;">
+					{$pageData.views}
+				</td>
+				<td style="width: 180px;">
+					<span class="btn btn-sm btn-success">编辑</span>
+					<span class="btn btn-sm btn-danger">删除</span>
+					<span class="btn btn-sm btn-default">预览</span>
+				</td>
+			</tr>
+			{/volist}
+		</table>
+		{$pageination->render()}
+	</div>
+</div>
+</body>
+</html>

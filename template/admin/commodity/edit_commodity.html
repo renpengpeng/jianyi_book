@@ -72,27 +72,15 @@
 				</div><br>
 				<div class="form-inline">
 					<label>出版日期：</label>
-					<input type="number" name="shop-press-date-year" class="form-control">
-					<label>年</label>
-					<input type="number" name="shop-press-date-month" class="form-control">
-					<label>月</label>
-					<input type="number" name="shop-press-date-day" class="form-control">
-					<label>日</label>
+					<input type="text" name="shop-press-date" class="form-control" value="{$shopMessage.press_date}">
+					<label>印刷日期：</label>
+					<input type="text" name="shop-print-date" class="form-control" value="{$shopMessage.print_date}">
 				</div><br>
 				<div class="form-inline">
 					<label>印次：</label>
 					<input type="text" name="shop-print-number" class="form-control">
 					<label>版次：</label>
 					<input type="text" name="shop-edition" class="form-control">
-				</div><br>
-				<div class="form-inline">
-					<label>印刷日期：</label>
-					<input type="number" name="shop-print-number-date-year" class="form-control">
-					<label>年</label>
-					<input type="number" name="shop-print-number-date-month" class="form-control">
-					<label>月</label>
-					<input type="number" name="shop-print-number-date-day" class="form-control">
-					<label>日</label>
 				</div><br>
 				<div class="form-inline">
 					<label>字数：</label>
@@ -111,14 +99,14 @@
 					<input type="number" name="shop-costs" class="form-control" value="0">
 					<label>是否套装</label>
 					<select name="set" class="form-control">
-						<option value="">不填写</option>
+						<option value="">不更改</option>
 						<option value="0">否</option>
 						<option value="1">是</option>
 					</select>
 				</div><br>
 				<div class="form-group">
 					<label>商品详情：</label>
-					<div id="shop-details"></div>
+					<div id="shop-details">{$shopMessage.details}</div>
 				</div>
 				<div class="form-group">
 					<input type="submit" value="修改商品" class="btn btn-success" id="create-btn">
@@ -131,7 +119,10 @@
 		// 初始化wangEdit
 		var E = window.wangEditor
 		var editor2 = new E('#shop-details')
+		editor2.customConfig.uploadImgServer = '/admin/commodity/upload_content'
+		editor2.customConfig.uploadFileName = 'myfile'
 		editor2.create()
+		// editor2.txt.html('')
 
 $(function(){
 	// 设置主图
