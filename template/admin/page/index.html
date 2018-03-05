@@ -5,6 +5,36 @@
 	<div class="col-md-10">
 		<div class="admin-box-title">
 			页面管理	
+			<span style="float: right;">
+				<a href="">
+					添加新页面
+				</a>
+			</span>
+		</div>
+		<!-- 添加新页面区域 -->
+		<div class="new-page">
+			<form action="" method="">
+				<div class="form-group">
+					<label>页面标题</label>
+					<input type="text" name="title" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>页面关键词</label>
+					<input type="text" name="keywords" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>页面描述</label>
+					<textarea name="description" class="form-control"></textarea>
+				</div>
+				<div class="form-group">
+					<label>页面内容</label>
+					<div id="page_content"></div>
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-success" value="添加">
+				</div>
+			</form>
+			<hr>
 		</div>
 		<table class="table table-bordered" style="text-align: center;">
 			<tr>
@@ -39,5 +69,13 @@
 		{$pageination->render()}
 	</div>
 </div>
+<script type="text/javascript">
+		// 初始化wangEdit
+		var E = window.wangEditor
+		var editor2 = new E('#page_content')
+		editor2.customConfig.uploadImgServer = '/admin/commodity/upload_content'
+		editor2.customConfig.uploadFileName = 'myfile'
+		editor2.create()
+</script>
 </body>
 </html>
