@@ -7,6 +7,12 @@ use think\Session;
 use think\Cookie;
 
 class Lists extends Controller {
+	public function _initialize(){
+		// 获取公共参数
+		$commonData 	=	getCommonData();
+
+		$this->assign('commonData',$commonData);
+	}
 	/*
 		*	如果id = all 显示所有分类
 	*/
@@ -17,8 +23,6 @@ class Lists extends Controller {
 		$indexListShowNum 	=	$setting['index_list_show_num'];
 
 		if($id == 'all'){
-			// 获取所有分类(header)
-			$allCate 		=	getCateForIndexA();
 
 			// 获取所有分类
 			$getAllCate 	=	getCateForIndexAllA();
@@ -27,7 +31,6 @@ class Lists extends Controller {
 			$meta 			=	getMeta('listall','','');
 
 
-			$this->assign('allCate',$allCate);
 			$this->assign('getAllCate',$getAllCate);
 			$this->assign('meta',$meta);
 
@@ -69,8 +72,6 @@ class Lists extends Controller {
 			// 获取分类基本信息
 			$cateData 		=	Model('BookCates')->get($id);
 
-			// 获取所有分类header
-			$allCate 		=	getCateForIndexA();
 
 			// 获取侧边栏数据
 			$sidebarData 	=	getListSidebar();
@@ -136,7 +137,6 @@ class Lists extends Controller {
 			}
 
 			$this->assign('meta',$meta);
-			$this->assign('allCate',$allCate);
 			$this->assign('sidebarData',$sidebarData);
 			$this->assign('shopData',$shopData);
 			$this->assign('pageination',$pageination);

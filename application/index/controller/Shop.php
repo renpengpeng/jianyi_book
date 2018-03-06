@@ -15,6 +15,10 @@ class Shop extends Controller {
 			$userArr 	=	['user_id'=>0];
 		}
 
+		// 获取公共参数
+		$commonData 	=	getCommonData();
+
+		$this->assign('commonData',$commonData);
 		$this->assign('userArr',$userArr);
 	}
 	public function index($id){
@@ -58,8 +62,6 @@ class Shop extends Controller {
 
 		// 获取meta
 		$meta 			=	getMeta('shop',$id,'','');
-		// 获取所有分类(header)
-		$allCate 		=	getCateForIndexA();
 		// 获取侧边栏数据
 		$sidebarData 	=	getListSidebar();
 		// 获取setting
@@ -93,7 +95,6 @@ class Shop extends Controller {
 
 
 		$this->assign('meta',$meta);
-		$this->assign('allCate',$allCate);
 		$this->assign('sidebarData',$sidebarData);
 		$this->assign('shopData',$hasData);
 		$this->assign('commentData',$comment);

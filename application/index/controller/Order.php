@@ -20,12 +20,13 @@ class Order extends Controller {
 
 		// 获取meta
 		$meta 	=	getMeta();
-		// 获取导航栏菜单
-		$allCate 	=	getCateForIndexA();
+		
+		// 获取公共参数
+		$commonData  	=	getCommonData();
 
 
 		$this->assign('meta',$meta);
-		$this->assign('allCate',$allCate);
+		$this->assign('commonData',$commonData);
 	}
 	public function index(){
 		// 获取good_id与购买数量

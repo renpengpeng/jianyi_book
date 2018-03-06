@@ -222,7 +222,10 @@ class Commodity extends Controller{
 		$data['numbering']	=	$numbering;
 
 		// 过滤字符
-		$data['details'] 	=	htmlspecialchars_decode($data['details']);
+		if(isset($data['details'])){
+			$data['details'] 	=	htmlspecialchars_decode($data['details']);
+		}
+		
 
 		// 删除good_id
 		if(isset($data['good_id'])){
@@ -353,19 +356,11 @@ class Commodity extends Controller{
 				Cookie::set('pic4',$fuPicArr[2]);
 				Cookie::set('pic5',$fuPicArr[3]);
 
-				dump($_COOKIE);
-
 			// 获取所有分类
 			$allCate	=	adminGetCateForOption();
 
 			// html反转details
 			$shopMessage['details'] 	=	htmlspecialchars_decode($shopMessage['details']);
-
-			// dump($_COOKIE);
-			// 分割出版日期
-				// if(!empty($data['press_date'])){
-
-				// }
 
 			$this->assign('allCate',$allCate);
 			$this->assign('shopMessage',$shopMessage);

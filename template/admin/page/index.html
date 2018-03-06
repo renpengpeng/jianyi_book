@@ -60,7 +60,7 @@
 				<td style="width: 180px;">
 					<a href="{:url('admin/page/edit',['id'=>$pageData.page_id])}" class="btn btn-sm btn-success">编辑</a>
 					<span class="btn btn-sm btn-danger" href="{:url('admin/page/del',['id'=>$pageData.page_id])}" onclick="buttonHref(this)">删除</span>
-					<span class="btn btn-sm btn-default">预览</span>
+					<a class="btn btn-sm btn-default" href="http://{$_SERVER['HTTP_HOST']}{:url('index/page/index',['id'=>$pageData.page_id])}" target="_blank">预览</a>
 				</td>
 			</tr>
 			{/volist}

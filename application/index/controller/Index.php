@@ -6,6 +6,12 @@ use think\Controller;
 
 class Index extends Controller
 {
+    public function _initialize(){
+        // 获取公共 参数
+        $commonData     =   getCommonData();
+
+        $this->assign('commonData',$commonData);
+    }
     public function index()
     {
     	// 获取setting
@@ -15,8 +21,6 @@ class Index extends Controller
 
     	// 获取meta
     	$meta 			=	getMeta();
-    	// 获取所有商	品分类
-    	$allCate 		=	getCateForIndexA();
 
     	// 获得banner信息
     	$banner 		=	$setting['index_banner'];
@@ -77,8 +81,6 @@ class Index extends Controller
     		
     	}
 
-
-    	$this->assign('allCate',$allCate);
     	$this->assign('meta',$meta);
     	$this->assign('banner',$bannerData);
     	$this->assign('newData',$newData);
@@ -93,13 +95,10 @@ class Index extends Controller
 	public function cavaet($msg){
 		// 获取meta
 		$meta 			=	getMeta('cavaet','',3,$msg);
-		// 获取所有分类
-		$allCate 		=	getCateForIndexAllA();
 
 
 		$this->assign('msg',$msg);
 		$this->assign('meta',$meta);
-		$this->assign('allCate',$allCate);
 
 		return view();
 	}

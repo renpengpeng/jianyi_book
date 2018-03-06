@@ -435,7 +435,11 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 			$listAllInfo 	=	$setting['listall_meta'];
 
 			// 分割为数组
-			$listAllArr 	=	explode('%', $listAllInfo);
+			$listAllArr 	=	explode('{%}', $listAllInfo);
+
+			if(count($listAllArr) != 3){
+				$listAllArr 	=	['','',''];
+			}
 
 			// 拼接标题
 			if($otherTitleType == 0){
@@ -487,6 +491,10 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 			// 分割数组
 			$loginArr 		=	explode('%', $login);
 
+			if(count($loginArr) != 3){
+				$loginArr 	=	['','',''];
+			}
+
 			// 拼接标题
 			if($otherTitleType == 0){
 				$title 		=	$loginArr[0].$webTitleLine.$webTitle;
@@ -499,7 +507,11 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 			$reg 			=	$setting['reg_meta'];
 
 			// 分割数组
-			$regArr 		=	explode('%', $reg);
+			$regArr 		=	explode('{%}', $reg);
+
+			if(count($regArr) != 3){
+				$regArr 	=	['','',''];
+			}
 
 			// 拼接标题
 			if($otherTitleType == 0){
@@ -516,7 +528,13 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 			// 获取信息
 			$user 			=	$setting['user_meta'];
 
-			$userArr 		=	explode('%', $user);
+			$userArr 		=	explode('{%}', $user);
+
+
+			if(count($userArr) != 3){
+				$userArr 	=	['','','']; 
+			}
+
 
 			// 拼接标题
 			if($otherTitleType == 0){
@@ -622,6 +640,27 @@ function getListSidebar(){
 }
 /*
 	*	获取公共参数
-	*	commonData 包含：headerCate 		->	页面头部菜单
+	*	commonData 
+	*			包含：headerCate 		->	页面头部菜单
+	*				  footerCode 		->	页面底部增加代码
 
 */
+function getCommonData(){
+	// 获取头部菜单
+	$headerCate 	=	getCateForIndexA();
+
+	// 获取页面底部代码footer_code
+		// 获取setting
+		$setting 	=	getSetting();
+
+	$footerCode 	=	$setting['footer_code'];
+
+
+	// 整理结果
+	$result 		=	[
+		'headerCate' 	=>	$headerCate,
+		'footerCode' 	=>	$footerCode,
+	];
+
+	return $result;
+}

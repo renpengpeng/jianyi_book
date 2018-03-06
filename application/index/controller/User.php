@@ -24,9 +24,13 @@ class User extends Controller {
 
 		// 获取meta
 		$meta 		=	getMeta('user','','','');
+
 		// 获取所有分类
 		$allCate 	=	getCateForIndexA();
+		// 获取公共参数
+		$commonData 	=	getCommonData();
 
+		$this->assign('commonData',$commonData);
 		$this->assign('meta',$meta);
 		$this->assign('allCate',$allCate);
 	}
@@ -208,6 +212,13 @@ class User extends Controller {
 		*	个人信息
 	*/
 	public function info(){
+		// 获取用户信息
+		$userData 	=	Model('BookUsers')->get(USERID)->toArray();
+
+		// 转换时间
+		$userData['reg_time'] 	=	date('Y-m-d H:i:s',$userData['reg_time']);
+
+		$this->assign('userData',$userData);
 		return view();
 	}
 	/*

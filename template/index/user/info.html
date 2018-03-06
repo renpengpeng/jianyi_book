@@ -2,8 +2,73 @@
 <div class="container" style="margin-top:10px; margin-bottom: 10px;">
 	{include file="../template/index/base/user-sidebar.html"}
 	<div class="col-md-8">
-		个人信息
-		
+		<div class="index-box-title">
+			用户信息
+		</div>	
+		<table class="table table-bordered">
+			<tr>
+				<td>ID</td>
+				<td>{$userData.user_id}</td>
+			</tr>
+			<tr>
+				<td>用户名</td>
+				<td>{$userData.username}</td>
+			</tr>
+			<tr>
+				<td>论坛名称</td>
+				<td>{$userData.bbsname}</td>
+			</tr>
+			<tr>
+				<td>邮箱</td>
+				<td>{$userData.email}</td>
+			</tr>
+			<tr>
+				<td>手机</td>
+				<td>{$userData.phone}</td>
+			</tr>
+			<tr>
+				<td>性别</td>
+				<td>
+					{if $userData.sex eq 0}
+					保密
+					{elseif $userData.sex eq 1}
+					男
+					{else /}
+					女
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<td>余额</td>
+				<td>{$userData.points}</td>
+			</tr>
+			<tr>
+				<td>已消费金额</td>
+				<td>{$userData.pay_points}</td>
+			</tr>
+			<tr>
+				<td>支付密码</td>
+				<td>{$userData.paywd}</td>
+			</tr>
+			<tr>
+				<td>地址</td>
+				<td>{$userData.province}&nbsp;&nbsp;{$userData.city}&nbsp;&nbsp;{$userData.district}&nbsp;&nbsp;{$userData.address}</td>
+			</tr>
+			<tr>
+				<td>状态</td>
+				<td>
+					{if $userData.status eq 0}
+					锁定
+					{else /}
+					正常
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<td>注册时间</td>
+				<td>{$userData.reg_time}</td>
+			</tr>
+		</table>
 	</div>
 </div>
 {include file="../template/index/base/footer.html"}

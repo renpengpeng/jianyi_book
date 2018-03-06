@@ -7,6 +7,12 @@ use think\Cookie;
 use think\Controller;
 
 class Search extends Controller {
+	public function _initialize(){
+		 // 获取公共 参数
+        $commonData     =   getCommonData();
+
+        $this->assign('commonData',$commonData);
+	}
 	public function index(){
 		if(!input('?keywords')){
 			$this->redirect(url('index/index/cavaet',['msg'=>'参数缺少']));
@@ -58,10 +64,8 @@ class Search extends Controller {
 		$sidebarData 	=	getListSidebar();
 
 		$meta 			=	getMeta();
-		$allCate 		=	getCateForIndexA();
 
 		$this->assign('meta',$meta);
-		$this->assign('allCate',$allCate);
 		$this->assign('searchData',$search);
 		$this->assign('pageination',$pageination);
 		$this->assign('sidebarData',$sidebarData);

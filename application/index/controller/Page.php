@@ -6,6 +6,12 @@ use think\Session;
 use think\Controller;
 
 class Page extends Controller {
+	public function _initialize(){
+		// 获取公共参数
+		$commonData 	=	getCommonData();
+
+		$this->assign('commonData',$commonData);
+	}
 	public function index($id){
 		// 如果page不是数字则跳转错误页面 否则获取page信息
 		if(!is_numeric($id)){
@@ -17,6 +23,14 @@ class Page extends Controller {
 				$this->redirect(url('index/index/cavaet',['msg'=>'没有此页面']));
 			}else{
 				$pageData 	=	$pageData->toArray();
+			}
+		}
+
+		// 如果页面的status为0 检测是否存在admin_info session 
+		// 如果存在则正常浏览否则跳转错误页面
+		if($pageData['status'] == 0){
+			if(!Session::has('admin_id')){
+				$this->redirect(url('index/index/cavaet',['msg'=>'未开放的页面']));
 			}
 		}
 
@@ -35,15 +49,28 @@ class Page extends Controller {
 		// 获取meta
 		$meta 	=	getMeta('page',$id,'','');
 
-		// 获取header的所有分类
-		$allCate 	=	getCateForIndexA();
+		// 浏览量自增1
+		$zeng 	=	Model('BookPages')->where('page_id',$id)->setInc('views');
 
 		$this->assign('pageData',$pageData);
 		$this->assign('meta',$meta);
-		$this->assign('allCate',$allCate);
 
 		return view();
 		
+	}
+	/*
+		*	友情链接页面
+	*/
+	public function links(){
+		// 获取meta
+		$meta 	=	getMeta();
+
+		// 获取友情链接
+		$linkData 	=	Model('BookLinks')->where('status',1)->order('link_id desc')->select();
+
+		$this->assign('meta',$meta);
+		$this->assign('linkData',$linkData);
+		return view();
 	}
 }
 

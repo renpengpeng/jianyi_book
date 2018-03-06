@@ -10,6 +10,12 @@ use think\Cookie;
 
 
 class Login extends Controller {
+	public function _initialize(){
+		// 获取公共参数
+		$commonData 	=	getCommonData();
+
+		$this->assign('commonData',$commonData);
+	}
 	public function index(){
 		// 如果有有session -> user_id则跳转到用户中心
 		if(Session::has('user_info')){
@@ -18,11 +24,8 @@ class Login extends Controller {
 
 		// 获取meta
 		$meta 	=	getMeta('login');
-		// 获取所有分类(header)
-		$allCate 	=	getCateForIndexA();
 
 		$this->assign('meta',$meta);
-		$this->assign('allCate',$allCate);
 		return view();
 	}
 	/*
@@ -81,13 +84,9 @@ class Login extends Controller {
 			header('location='.url('index/user/index'));
 		}
 
-		// 获取cate (header)
-		$allCate 	=	getCateForIndexA();
 		// 获取meta
 		$meta 		=	getMeta('reg','','','');
 
-
-		$this->assign('allCate',$allCate);
 		$this->assign('meta',$meta);
 		return view();
 	}
