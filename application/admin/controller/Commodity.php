@@ -166,7 +166,7 @@ class Commodity extends Controller{
 		$file				=	request()->file('myfile');
 
 		if(empty($file)){
-			return json(['code'=>0,'msg'=>'参数缺少']);
+			return $this->error('参数缺少 上传失败');
 		}
 
 		// 获取系统参数
@@ -236,9 +236,9 @@ class Commodity extends Controller{
 		$insert 		=	Model('BookGoods')->insert($data);
 
 		if($insert){
-			return json(['code'=>1,'msg'=>'添加成功']);
+			return $this->success('商品添加成功');
 		}else{
-			return json(['code'=>0,'msg'=>'添加失败']);
+			return $this->error('商品添加失败');
 		}
 
 	}
@@ -247,7 +247,7 @@ class Commodity extends Controller{
 	*/
 	public function status($id){
 		if(!isset($id) || empty($id) || !is_numeric($id)){
-			return json(['code'=>0,'msg'=>'参数缺少']);
+			return $this->error('参数缺少');
 		}
 
 		// 查询商品 并提取status
@@ -265,9 +265,9 @@ class Commodity extends Controller{
 		$updateShop 	=	Model('BookGoods')->where('good_id',$id)->update(['status'=>$nowStatus]);
 
 		if($updateShop){
-			return json(['code'=>1,'msg'=>'状态更改成功']);
+			return $this->success('状态更新成功');
 		}else{
-			return json(['code'=>0,'msg'=>'状态更改失败']);
+			return $this->error('状态更新失败');
 		}
 	}
 	/*
@@ -275,16 +275,16 @@ class Commodity extends Controller{
 	*/
 	public function del($id){
 		if(!isset($id) || empty($id) || !is_numeric($id)){
-			return json(['code'=>0,'msg'=>'参数缺少']);
+			return $this->error('参数缺少');
 		}
 
 		// 开始删除商品 成功返回
 		$delStatus 	 =	Model('BookGoods')->where('good_id',$id)->delete();
 
 		if($delStatus){
-			return json(['code'=>1,'msg'=>'删除成功']);
+			return $this->success('删除成功');
 		}else{
-			return json(['code'=>0,'msg'=>'删除失败']);
+			return $this->error('删除失败');
 		}
 	}
 
@@ -299,6 +299,7 @@ class Commodity extends Controller{
 
 		// 获取setting
 		$setting 			=	getSetting();
+
 		// 获取每页展示多少数量
 		$adminShowNum 		=	$setting['admin_list_show_num'];
 
@@ -309,6 +310,7 @@ class Commodity extends Controller{
 			// 分页
 			$pageination 	=	Model('BookGoods')->where('title','like',"%{$title}%")->paginate($adminShowNum);
 		}else{
+
 			$searchArr 		=	Model('BookGoods')
 									->where('title','like',"%{$title}%")
 									->where('status',$status)
@@ -338,19 +340,14 @@ class Commodity extends Controller{
 			$shopMessage 	=	$shopMessage->toArray();
 
 			// 获取主图 x1 ， 副图 x4 分别分割为数组并分割写入cookie
-
-
 				// 赋值主图到cookie
 				Cookie('pic1',$shopMessage['main_img']);
-
-				// 获取副图并分割
+				// 获取副图
 				$fuPic 		=	$shopMessage['vice_img'];
-
+				// 分割幅图为数组
 				$fuPicArr 	=	explode(',',$fuPic);
 
-
-
-				// 分别赋值副图
+				// 分别赋值副图地址到cookie
 				Cookie::set('pic2',$fuPicArr[0]);
 				Cookie::set('pic3',$fuPicArr[1]);
 				Cookie::set('pic4',$fuPicArr[2]);
@@ -362,10 +359,11 @@ class Commodity extends Controller{
 			// html反转details
 			$shopMessage['details'] 	=	htmlspecialchars_decode($shopMessage['details']);
 
+			// 赋值分类信息
 			$this->assign('allCate',$allCate);
+			// 赋值商品信息
 			$this->assign('shopMessage',$shopMessage);
-
-			// 赋值副图
+			// 赋值副图信息
 			$this->assign('vice_img',$fuPicArr);
 
 			return view();
@@ -387,6 +385,7 @@ class Commodity extends Controller{
 			// 格式化字符串
 			$data[$key] 	=	htmlspecialchars($data[$key]);
 
+			// 如果为空 删除
 			if(empty($data[$key])){
 				unset($data[$key]);
 			}
@@ -402,9 +401,9 @@ class Commodity extends Controller{
 		$update 	=	Model('BookGoods')->where('good_id',$good_id)->update($data);
 
 		if($update){
-			return json(['code'=>1,'msg'=>'修改成功']);
+			return $this->success('修改成功');
 		}else{
-			return json(['code'=>0,'msg'=>'修改失败']);
+			return $this->error('修改失败');
 		}
 	}
 }

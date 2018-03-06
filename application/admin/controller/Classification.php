@@ -17,6 +17,7 @@ class Classification extends Controller {
 			$this->redirect(url('admin/login/index'));
 		}else{
 			$adminSession 	=	Session('admin_id');
+
 			// 运营团队不允许修改分类
 			if($adminSession['permissions'] == 2){
 				$this->redirect(url('admin/index/cavaet',['msg'=>'没有足够的权限']));
@@ -77,9 +78,9 @@ class Classification extends Controller {
 		$insertBeign	=	Model('BookCates')->insert($insertData);
 
 		if($insertBeign){
-			return json(['code'=>1,'msg'=>'插入成功']);
+			return $this->success('增加分类成功');
 		}else{
-			return json(['code'=>0,'msg'=>'插入失败']);
+			return $this->error('增加分类失败');
 		}
 
 	}
@@ -88,7 +89,7 @@ class Classification extends Controller {
 	*/
 	public function del($id){
 		if(!$id || empty($id)){
-			return json(['code'=>'0','msg'=>'参数不完整']);
+			return $this->error('参数缺少');
 		}
 
 		// 检测是否有子分类
@@ -103,9 +104,9 @@ class Classification extends Controller {
 		}
 
 		if(!$del){
-			return json(['code'=>'0','msg'=>'删除失败']);
+			return $this->error('删除分类成功');
 		}else{
-			return json(['code'=>'1','msg'=>'删除成功']);
+			return $this0->success('删除分类失败');
 		}
 
 
@@ -113,10 +114,10 @@ class Classification extends Controller {
 	/*
 		*	分类编辑
 	*/
-	public function edit($id=null){
+	public function edit($id){
 		// 检测如果没有post 或者 没有$id 
 		if(!$id){
-			return json(['code'=>0,'msg'=>'信息缺少']);
+			return $this->error('参数缺少');
 		}
 
 		// 如果有id
@@ -131,8 +132,6 @@ class Classification extends Controller {
 
 			// 返回页面
 			return view();
-
-
 	}
 	/*
 		*	分类编辑处理
@@ -186,9 +185,9 @@ class Classification extends Controller {
 
 		// 返回数据
 		if($updateBegin){
-			return json(['code'=>1,'msg'=>'更新成功']);
+			return $this->success('更新成功');
 		}else{
-			return json(['code'=>0,'msg'=>'更新失败']);
+			return $this->error('更新失败');
 		}
 
 

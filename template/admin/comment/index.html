@@ -1,0 +1,33 @@
+{include file="../template/admin/base/header.html"}
+<!-- 内容区 -->
+<div class="container-fluid admin-box">
+	{include file="../template/admin/base/sidebar.html"}
+	<div class="col-md-10">
+		<div class="admin-box-title">评论管理</div>
+		<div class="alert alert-warning tip-alert"></div>
+		<table class="table table-bordered" style="text-align: center;">
+			<tr>
+				<th>评论编号</th>
+				<th>用户昵称</th>
+				<th>评论商品</th>
+				<th>评分</th>
+				<th>评论时间</th>
+				<th>操作</th>
+			</tr>
+			{volist name="commentData" id="commentData"}
+			<tr>
+				<td>{$commentData.comment_id}</td>
+				<td>{$commentData.username}</td>
+				<td>{$commentData.good_name}</td>
+				<td>{$commentData.fraction}</td>
+				<td>{$commentData.comment_time}</td>
+				<td>
+					<span class="btn btn-sm btn-danger" href="{:url('admin/comment/del',['id'=>$commentData.comment_id])}" onclick="buttonHref(this)">删除</span>
+				</td>
+			</tr>
+			{/volist}
+		</table>
+	</div>
+</div>
+</body>
+</html>
