@@ -544,6 +544,20 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 			$description 	=	"{$shopArr['title']}的作者为{$shopArr['author']},买正版图书，就上{$webTitle}";
 		break;
 
+		case 'page':
+			// 获取数据库内信息
+			$pageArr 		=	Model('BookPages')->get($id)->toArray();
+
+			// 拼接标题
+			if($otherTitleType == 0){
+				$title 		=	$pageArr['title'].$webTitleLine.$webTitle;
+			}else{
+				$title 		=	$pageArr['title'].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
+			}
+			$keywords 		=	$pageArr['keywords'];
+			$description 	=	$pageArr['description'];
+		break;
+
 		default:
 			
 		break;

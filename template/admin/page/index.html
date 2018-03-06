@@ -5,15 +5,14 @@
 	<div class="col-md-10">
 		<div class="admin-box-title">
 			页面管理	
-			<span style="float: right;">
-				<a href="">
+			<span style="float: right;font-size: 14px;color: blue;cursor: pointer;" onclick="newPageButton();">
 					添加新页面
-				</a>
 			</span>
 		</div>
+		<div class="alert alert-warning tip-alert"></div>
 		<!-- 添加新页面区域 -->
-		<div class="new-page">
-			<form action="" method="">
+		<div class="new-page" style="display: none;">
+			<form action="{:url('admin/page/new_page')}" method="post" onsubmit="return newPageForm(this);">
 				<div class="form-group">
 					<label>页面标题</label>
 					<input type="text" name="title" class="form-control">
@@ -59,8 +58,8 @@
 					{$pageData.views}
 				</td>
 				<td style="width: 180px;">
-					<span class="btn btn-sm btn-success">编辑</span>
-					<span class="btn btn-sm btn-danger">删除</span>
+					<a href="{:url('admin/page/edit',['id'=>$pageData.page_id])}" class="btn btn-sm btn-success">编辑</a>
+					<span class="btn btn-sm btn-danger" href="{:url('admin/page/del',['id'=>$pageData.page_id])}" onclick="buttonHref(this)">删除</span>
 					<span class="btn btn-sm btn-default">预览</span>
 				</td>
 			</tr>

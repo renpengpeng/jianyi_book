@@ -1,0 +1,45 @@
+{include file="../template/admin/base/header.html"}
+<!-- 内容区 -->
+<div class="container-fluid admin-box">
+	{include file="../template/admin/base/sidebar.html"}
+	<div class="col-md-10">
+		<div class="admin-box-title">
+			{$pageData.title} - <span class="btn btn-danger" onclick="window.history.go(-1)">取消编辑</span>
+		</div>
+		<div class="alert alert-warning tip-alert"></div>
+		<!-- 添加新页面区域 -->
+		<form action="{:url('admin/page/edit_admin')}" method="post" onsubmit="return pageEditForm(this);">
+			<input type="hidden" name="page_id" value="{$pageData.page_id}">
+			<div class="form-group">
+				<label>标题</label>
+				<input type="text" name="title" class="form-control" value="{$pageData.title}">
+			</div>
+			<div class="form-group">
+				<label>关键词</label>
+				<input type="text" name="keywords" class="form-control" value="{$pageData.keywords}">
+			</div>
+			<div class="form-group">
+				<label>描述</label>
+				<textarea name="description" class="form-control">{$pageData.description}</textarea>
+			</div>
+			<div class="form-group">
+				<div id="content"></div>
+			</div>
+			<div class="form-group">
+				<input type="submit" class="btn btn-success" value="修改">
+			</div>
+		</form>
+		
+	</div>
+</div>
+<script type="text/javascript">
+		// 初始化wangEdit
+		var E = window.wangEditor
+		var editor2 = new E('#content')
+		editor2.customConfig.uploadImgServer = '/admin/commodity/upload_content'
+		editor2.customConfig.uploadFileName = 'myfile'
+		editor2.create()
+		editor2.txt.html("{$pageData.content}")
+</script>
+</body>
+</html>

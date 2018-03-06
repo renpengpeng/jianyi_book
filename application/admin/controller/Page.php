@@ -49,4 +49,82 @@ class Page extends Controller{
 
 		return view();
 	}
+	/*
+		*	插入新页面
+	*/
+	public function new_page(){
+		$data 	=	input('post.');
+		// 没有标题不成立
+		if(!$data['title']){
+			return $this->error('标题不能为空');
+		}
+
+
+		// 插入时间参数 
+		$data['create_time'] 	=	time();
+
+		// 插入创建id
+		$data['create_id'] 		=	Session('admin_id')['admin_id'];
+
+		// 添加status
+		$data['status'] 		=	1;
+
+		// 开始插入
+		$insert 	=	Model('BookPages')->insert($data);
+		if($insert){
+			return $this->success('插入成功');
+		}else{
+			return $this->error('插入失败');
+		}
+	}
+	/*
+		*	删除
+	*/
+	public function del(){
+		$id 	=	input('id');
+		if(!$id){
+			return $this->error('没有此id');
+		}
+
+		// 开始删除
+		$del	=	Model('BookPages')->where('page_id',$id)->delete();
+
+		if($del){
+			return $this->success('删除成功');
+		}else{
+			return $this->error('删除失败');
+		}
+	}
+	/*
+		*	编辑
+	*/
+	public function edit(){
+		$id 	=	input('id');
+		if(!$id){
+			$this->error('没有id');
+		}
+
+		$pageData 	=	Model('BookPages')->get($id)->toArray();
+
+		// 反转html
+		$pageData['content'] 	=	htmlspecialchars_decode($pageData['content']);
+
+		$this->assign('pageData',$pageData);
+
+		return view();
+	}
+	/*
+
+	*/
+	public function edit_admin(){
+		$data 	=	input('post.');
+		// 开始更新
+		$updates 	=	Model('BookPages')->where('page_id',$data['page_id'])->update($data);
+
+		if($updates){
+			return $this->success('修改成功');
+		}else{
+			return $this->error('修改失败');
+		}
+	}
 }
