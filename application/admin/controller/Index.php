@@ -36,6 +36,21 @@ class Index extends Controller {
 		$orderYes 			=	Model('BookOrders')->where('order_status',5)->count();
 		// 统计商品分类数量
 		$cateCount 			=	Model('BookCates')->count();
+		// 获取评论数量
+		$commentCount 		=	Model('BookComment')->count();
+		// 获取好评数量 评分>= 4
+		$commentGood 		=	Model('BookComment')->where('fraction','>=',4)->count();
+		// 计算好评率
+		if($commentCount !=0 && $commentGood != 0){
+			$favorableRate 		=	($commentGood/$commentCount)*100;
+		}else{
+			$favorableRate 		=	0;
+		}
+		// 统计用户数量
+		$userCount 			=	Model('BookUsers')->count();
+		// 统计管理员数量
+		$adminCount 		=	Model('BookAdmins')->count();
+		
 
 		$this->assign('goodCount',$goodCount);
 		$this->assign('goodYes',$goodYes);
@@ -46,6 +61,11 @@ class Index extends Controller {
 		$this->assign('orderOnWay',$orderOnWay);
 		$this->assign('orderYes',$orderYes);
 		$this->assign('cateCount',$cateCount);
+		$this->assign('commentCount',$commentCount);
+		$this->assign('commentGood',$commentGood);
+		$this->assign('favorableRate',$favorableRate);
+		$this->assign('userCount',$userCount);
+		$this->assign('adminCount',$adminCount);
 		return view();
 	}
 	/*
