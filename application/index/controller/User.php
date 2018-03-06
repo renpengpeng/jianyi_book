@@ -63,18 +63,32 @@ class User extends Controller {
 		*	订单管理页面
 	*/
 	public function order(){
+		// 获取setting
+		$setting 	=	getSetting();
+		// 获取page
+		if(!input('page')){
+			$page 	=	1;
+		}else{
+			$page 	=	input('page');
+			if(!is_numeric($page)){
+				$this->redirect(url('index/index/cavaet',['msg'=>'page参数不符合要求']));
+			}
+		}
+
 		// 获取用户所有订单
 		$userOrders = Model('BookOrders')
 						->where('user_id',USERID)
 						->order('add_time desc')
+						->page($page)
+						->limit($setting['index_list_show_num'])
 						->select();
 
 		// 分页
 		$pageation 	=	Model('BookOrders')
 						->where('user_id',USERID)
-						->paginate(10);
+						->paginate($setting['index_list_show_num']);
 
-		$this->assign('userOrders',$userOrders);
+		$this->assign('orderData',$userOrders);
 		$this->assign('pageation',$pageation);
 
 		return view();
@@ -225,6 +239,10 @@ class User extends Controller {
 		*	个人资料修改
 	*/
 	public function modify(){
+		// 获取用户信息
+		$userData 	=	Model('BookUsers')->get(USERID)->toArray();
+
+		$this->assign('userData',$userData);
 		return view();
 	}
 	/*

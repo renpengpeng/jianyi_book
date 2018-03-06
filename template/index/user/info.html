@@ -3,12 +3,18 @@
 	{include file="../template/index/base/user-sidebar.html"}
 	<div class="col-md-8">
 		<div class="index-box-title">
-			用户信息
+			用户信息-<a class="btn btn-default" href="{:url('index/user/modify')}">修改信息</a>
 		</div>	
 		<table class="table table-bordered">
 			<tr>
 				<td>ID</td>
 				<td>{$userData.user_id}</td>
+			</tr>
+			<tr>
+				<td>头像</td>
+				<td height="50">
+					<img src="{$userData.head_pic}" height="100%">
+				</td>
 			</tr>
 			<tr>
 				<td>用户名</td>
