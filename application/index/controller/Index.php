@@ -58,6 +58,8 @@ class Index extends Controller
     							->where([
     								'cate' 	=> 	['in',$floorIDArr[$i]]
     							])
+                                ->order('good_id desc')
+                                ->limit($setting['index_list_show_num'])
     							->select();
 
     		if($getData[$i]){
