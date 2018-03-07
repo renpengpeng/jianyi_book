@@ -6,6 +6,10 @@ use think\Model;
 use think\Session;
 use think\Cookie;
 
+/*
+	*	后台用户登录
+*/
+
 class Login extends Controller {
 	// 自动加载 如果有session admin_id 则跳转到首页
 	public function _initialize(){

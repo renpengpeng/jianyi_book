@@ -5,6 +5,10 @@ use think\Model;
 use think\Session;
 use think\Controller;
 
+/*
+	*	页面管理模块
+*/
+
 class Page extends Controller{
 	// 自动加载 如果没有session : admin_id 跳转到登录页面
 	public function _initialize(){

@@ -6,6 +6,10 @@ use think\Model;
 use think\Session;
 use think\Cookie;
 
+/*
+	*	后台首页模块
+*/
+
 class Index extends Controller {
 	/*
 		*	如果没有admin_id 就跳转到后台登录页面

@@ -6,6 +6,10 @@ use think\Controller;
 use think\Session;
 use think\Cookie;
 
+/*
+	*	站点整体系统设置
+*/
+
 class Setting extends Controller {
 	public function _initialize(){
 		// 检测如果没有admin_id 跳转到登录界面

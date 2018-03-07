@@ -6,6 +6,10 @@ use think\Session;
 use think\Cookie;
 use think\Controller;
 
+/*
+	*	后台订单管理
+*/
+
 class Order extends Controller{
 	public function _initialize(){
 		if(!Session::has('admin_id')){

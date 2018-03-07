@@ -7,7 +7,7 @@ use think\Cookie;
 use think\Model;
 
 /*
-	*	商品
+	*	商品管理模块
 */
 
 class Commodity extends Controller{

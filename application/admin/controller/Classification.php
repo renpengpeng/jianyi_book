@@ -7,7 +7,7 @@ use think\Model;
 use think\Controller;
 
 /* 
-	*	分类管理
+	*	分类管理模块
 */
 
 class Classification extends Controller {

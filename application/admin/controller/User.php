@@ -6,6 +6,10 @@ use think\Controller;
 use think\Session;
 use think\Cookie;
 
+/*
+	*	用户管理模块
+*/
+
 class User extends Controller {
 	public function _initialize(){
 		// 判断Session id
