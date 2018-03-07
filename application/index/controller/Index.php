@@ -27,6 +27,12 @@ class Index extends Controller
     	$banner 		=	$setting['index_banner'];
     	// 处理banner信息
     	$bannerData 	=	explode('{fenge}', $banner);
+        // 处理如果为空 则删除
+        foreach ($bannerData as $key => $value) {
+            if(empty($value)){
+                unset($bannerData[$key]);
+            }
+        }
     	for ($i=0; $i < count($bannerData) ; $i++) { 
     		$bannerData[$i] 	=	explode('{a}', $bannerData[$i]);
     	}

@@ -638,6 +638,7 @@ function getListSidebar(){
 	$likeArr 	=	Model('BookGoods')
 					->where('status',1)
 					->order("rand()")
+					->limit($sidebarLikeShowNum)
 					->select()
 					->toArray();
 
