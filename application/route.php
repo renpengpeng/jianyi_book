@@ -16,6 +16,12 @@ Route::rule([
 	'/shop/:id'			=>	'index/shop/index',
 	'/lists/:id'		=>	'index/lists/index',
 	'/page/:id' 		=>	'index/page/index',
-	'/user' 			=>	'index/user/index'
+	'/login' 			=>	'index/login/index',
+	'/reg' 				=>	'index/login/reg',
+	'/links' 			=>	'index/page/links',
+	'/shop/search' 		=>	'index/search/index'
 
 ],'','get',['ext'=>'html'],['id'=>'[\d|\w]+']);
+
+// 登录
+// Route::rule('/login','index/login/index','','get',['ext'=>'html'],'');
