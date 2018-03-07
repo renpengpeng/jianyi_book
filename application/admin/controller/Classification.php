@@ -97,10 +97,10 @@ class Classification extends Controller {
 
 		if($hasZi){
 			// 遍历数组各个删除
-				$map['cate_id']	=	array('in',$hasZi);
-				$del 			=	Model('BookCates')->where($map)->delete();
+				$map['cate_id']		=	array('in',$hasZi);
+				$del 				=	Model('BookCates')->where($map)->delete();
 		}else{
-				$del 			=	Model('BookCates')->where('cate_id',$id)->delete();
+				$del 				=	Model('BookCates')->where('cate_id',$id)->delete();
 		}
 
 		if(!$del){
