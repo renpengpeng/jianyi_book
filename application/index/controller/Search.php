@@ -6,6 +6,10 @@ use think\Session;
 use think\Cookie;
 use think\Controller;
 
+/*
+	*	商品搜索
+*/
+
 class Search extends Controller {
 	public function _initialize(){
 		 // 获取公共 参数

@@ -7,7 +7,9 @@ use think\Model;
 use think\Session;
 use think\Cookie;
 
-
+/*
+	*	前台用户登录
+*/
 
 class Login extends Controller {
 	public function _initialize(){

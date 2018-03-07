@@ -3,6 +3,10 @@ namespace app\index\controller;
 
 use think\Controller;
 
+/*
+    *   站点首页
+*/
+
 
 class Index extends Controller
 {

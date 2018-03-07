@@ -5,6 +5,10 @@ use think\Model;
 use think\Session;
 use think\Controller;
 
+/*
+	*	页面
+*/
+
 class Page extends Controller {
 	public function _initialize(){
 		// 获取公共参数

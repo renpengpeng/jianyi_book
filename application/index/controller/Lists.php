@@ -6,6 +6,10 @@ use think\Controller;
 use think\Session;
 use think\Cookie;
 
+/*
+	*	站点列表
+*/
+
 class Lists extends Controller {
 	public function _initialize(){
 		// 获取公共参数

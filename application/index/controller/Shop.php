@@ -6,6 +6,10 @@ use think\Model;
 use think\Session;
 use think\Cookie;
 
+/*
+	*	商品展示
+*/
+
 class Shop extends Controller {
 	public function _initialize(){
 		// 如果有会员信息赋值会员信息

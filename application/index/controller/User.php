@@ -6,6 +6,10 @@ use think\Model;
 use think\Session;
 use think\Cookie;
 
+/*
+	*	用户中心
+*/
+
 class User extends Controller {
 	/*
 		*	自动加载获取用户ID

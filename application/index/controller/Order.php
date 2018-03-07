@@ -6,6 +6,10 @@ use think\Session;
 use think\Model;
 use think\Controller;
 
+/*
+	*	订单操作：新订单 ...
+*/
+
 class Order extends Controller {
 	/*
 		*	初始化 判断用户是否登录
