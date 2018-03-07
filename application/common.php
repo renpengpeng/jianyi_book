@@ -442,7 +442,7 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 			}
 
 			// 拼接标题
-			if($otherTitleType == 0){
+			if($otherTitleType == 1){
 				$title 		=	$listAllArr[0].$webTitleLine.$webTitle;
 			}else{
 				$title 		=	$listAllArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
@@ -454,7 +454,7 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 
 		case 'cavaet':
 			// 拼接标题
-			if($otherTitleType == 0){
+			if($otherTitleType == 1){
 				$title 		=	$msg.$webTitleLine.$webTitle;
 			}else{
 				$title 		=	$msg.$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
@@ -469,7 +469,7 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 
 
 			// 拼接标题
-			if($otherTitleType == 0){
+			if($otherTitleType == 1){
 				$title 	=	$cateArr['cate_name'].$webTitleLine.$webTitle;
 			}else{
 				$title 	=	$cateArr['cate_name'].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
@@ -496,7 +496,7 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 			}
 
 			// 拼接标题
-			if($otherTitleType == 0){
+			if($otherTitleType == 1){
 				$title 		=	$loginArr[0].$webTitleLine.$webTitle;
 			}else{
 				$title 		=	$loginArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
@@ -514,7 +514,7 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 			}
 
 			// 拼接标题
-			if($otherTitleType == 0){
+			if($otherTitleType == 1){
 				$title 		=	$regArr[0].$webTitleLine.$webTitle;
 			}else{
 				$title 		=	$regArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
@@ -537,7 +537,7 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 
 
 			// 拼接标题
-			if($otherTitleType == 0){
+			if($otherTitleType == 1){
 				$title 		=	$userArr[0].$webTitleLine.$webTitle;
 			}else{
 				$title 		=	$userArr[0].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
@@ -553,7 +553,7 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 			$pivotal 	=	"作者：{$shopArr['author']}  出版社：{$shopArr['press']}  共{$shopArr['word_count']}字";
 			
 			// 拼接标题
-			if($otherTitleType == 0){
+			if($otherTitleType == 1){
 				$title 		=	$shopArr['title'].$webTitleLine.$pivotal.$webTitleLine.$webTitle;
 			}else{
 				$title 		=	$shopArr['title'].$webTitleLine.$pivotal.$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
@@ -567,7 +567,7 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 			$pageArr 		=	Model('BookPages')->get($id)->toArray();
 
 			// 拼接标题
-			if($otherTitleType == 0){
+			if($otherTitleType == 1){
 				$title 		=	$pageArr['title'].$webTitleLine.$webTitle;
 			}else{
 				$title 		=	$pageArr['title'].$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
@@ -578,7 +578,7 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 
 		case 'search':
 			// 获取转入的 msg
-			if($otherTitleType == 0){
+			if($otherTitleType == 1){
 				$title 		=	$msg.'的搜索结果'.$webTitleLine.$webTitle;
 			}else{
 				$title 		=	$msg.'的搜索结果'.$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
