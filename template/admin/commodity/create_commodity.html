@@ -118,7 +118,8 @@
 		// 初始化wangEdit
 		var E = window.wangEditor;
 		var editor2 = new E('#shop-details');
-		editor2.customConfig.uploadImgShowBase64 = true;
+		editor2.customConfig.uploadImgServer = '/admin/commodity/upload_content'
+		editor2.customConfig.uploadFileName = 'myfile'
 		editor2.create();
 
 </script>

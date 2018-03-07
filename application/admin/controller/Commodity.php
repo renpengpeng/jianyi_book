@@ -341,7 +341,7 @@ class Commodity extends Controller{
 
 			// 获取主图 x1 ， 副图 x4 分别分割为数组并分割写入cookie
 				// 赋值主图到cookie
-				Cookie('pic1',$shopMessage['main_img']);
+				Cookie::set('pic1',$shopMessage['main_img']);
 				// 获取副图
 				$fuPic 		=	$shopMessage['vice_img'];
 				// 分割幅图为数组

@@ -122,24 +122,16 @@
 		editor2.customConfig.uploadImgServer = '/admin/commodity/upload_content'
 		editor2.customConfig.uploadFileName = 'myfile'
 		editor2.create()
-		// editor2.txt.html('')
 
 $(function(){
 	// 设置主图
 	var Pic 	=	$('.create-commodity-pic');
+	// 获取cookie
+	var pic1 	=	$.cookie('pic1');
+
 
 	Pic.eq(0).css('background-image','url(' +	$.cookie('pic1') +')');
 
-	
-
-	// 设置其他cookie为空
-	// $.cookie('pic');
-
-	console.log($.cookie('pic1'));
-	console.log($.cookie('pic2'));
-	console.log($.cookie('pic3'));
-	console.log($.cookie('pic4'));
-	console.log($.cookie('pic5'));
 
 })
 </script>

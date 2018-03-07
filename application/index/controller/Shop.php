@@ -151,7 +151,7 @@ class Shop extends Controller {
 	public function add_cart(){
 
 		if(!input('?post.userid') || !input('?post.shopid') || !input('?post.num')){
-			return $this->error('非法的参数')
+			return $this->error('非法的参数');
 		}else{
 			$userid 	=	input('userid');
 			$shopid 	=	input('shopid');
