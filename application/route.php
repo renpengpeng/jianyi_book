@@ -9,19 +9,13 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-// return [
-//     '__pattern__' => [
-//         'name' => '\w+',
-//     ],
-//     '[hello]'     => [
-//         ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
-//         ':name' => ['index/hello', ['method' => 'post']],
-//     ],
-
-// ];
 
 use think\Route;
 
 Route::rule([
-	'shop/:id' 	=>	'index/shop/index'
-]);
+	'/shop/:id'			=>	'index/shop/index',
+	'/lists/:id'		=>	'index/lists/index',
+	'/page/:id' 		=>	'index/page/index',
+	'/user' 			=>	'index/user/index'
+
+],'','get',['ext'=>'html'],['id'=>'[\d|\w]+']);

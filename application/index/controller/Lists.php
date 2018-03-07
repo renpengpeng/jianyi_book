@@ -16,7 +16,7 @@ class Lists extends Controller {
 	/*
 		*	如果id = all 显示所有分类
 	*/
-	public function index($id='all'){
+	public function index($id){
 		// 获取setting
 		$setting 			=	getSetting();
 		// 赋值前台首页每页展示多少数量
