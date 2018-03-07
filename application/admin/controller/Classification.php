@@ -61,7 +61,7 @@ class Classification extends Controller {
 			// 检测 上级等级 设置本级等级为上级等级+1
 			$lastGarden = Model('BookCates')->where('cate_id',$data['pid'])->find()->toArray();
 
-			$garden = $lastGarden['garden']+1;
+			$garden 	= $lastGarden['garden']+1;
 		}
 
 		// 整理插入数据
@@ -75,7 +75,7 @@ class Classification extends Controller {
 
 
 		// 开始插入
-		$insertBeign	=	Model('BookCates')->insert($insertData);
+		$insertBeign		=	Model('BookCates')->insert($insertData);
 
 		if($insertBeign){
 			return $this->success('增加分类成功');
@@ -100,7 +100,7 @@ class Classification extends Controller {
 				$map['cate_id']	=	array('in',$hasZi);
 				$del 			=	Model('BookCates')->where($map)->delete();
 		}else{
-				$del 	=	Model('BookCates')->where('cate_id',$id)->delete();
+				$del 			=	Model('BookCates')->where('cate_id',$id)->delete();
 		}
 
 		if(!$del){
