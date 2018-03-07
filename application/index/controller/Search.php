@@ -42,10 +42,15 @@ class Search extends Controller {
 								->select();
 
 		if($search){
+			// 转换数组
 			$search 		=	$search->toArray();
-			$searchCount 	=	count($search);
+			// 统计数据库内总数量
+			$goodCount 		=	Model('BookGoods')->count();
+			// 获取搜索到的数量
+			$searchCount	= 	count($search);
 			if($page > 1){
-				if(ceil($searchCount / $indexListShowNum) < $page){
+				// 判断页数是否超出县支行
+				if(ceil($goodCount / $indexListShowNum) < $page){
 					$this->redirect(url('index/index/cavaet',['msg'=>'超出限制的page']));
 				}
 			}
@@ -63,7 +68,8 @@ class Search extends Controller {
 		// 侧边栏数据
 		$sidebarData 	=	getListSidebar();
 
-		$meta 			=	getMeta();
+		// 获取meta数据
+		$meta 			=	getMeta('search','','',$keywords);
 
 		$this->assign('meta',$meta);
 		$this->assign('searchData',$search);

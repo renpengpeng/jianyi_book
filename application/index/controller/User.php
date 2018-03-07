@@ -190,6 +190,7 @@ class User extends Controller {
 			return $this->error('参数错误');
 		}else{
 			$id 	=	input('post.id');
+			// 如果id不为数字
 			if(!is_numeric($id)){
 				return $this->error('参错错误');
 			}
@@ -227,7 +228,7 @@ class User extends Controller {
 	*/
 	public function info(){
 		// 获取用户信息
-		$userData 	=	Model('BookUsers')->get(USERID)->toArray();
+		$userData 				=	Model('BookUsers')->get(USERID)->toArray();
 
 		// 转换时间
 		$userData['reg_time'] 	=	date('Y-m-d H:i:s',$userData['reg_time']);
@@ -240,7 +241,7 @@ class User extends Controller {
 	*/
 	public function modify(){
 		// 获取用户信息
-		$userData 	=	Model('BookUsers')->get(USERID)->toArray();
+		$userData 				=	Model('BookUsers')->get(USERID)->toArray();
 
 		$this->assign('userData',$userData);
 		return view();
@@ -261,7 +262,7 @@ class User extends Controller {
 		}
 
 		// 查找用户数据
-		$userMessage 	=	Model('BookUsers')->get(USERID);
+		$userMessage 		=	Model('BookUsers')->get(USERID);
 
 		// 如果用户状态
 		if($userMessage){
@@ -294,7 +295,7 @@ class User extends Controller {
 		}
 
 		// 开始更新数据
-		$update 	=	Model('BookUsers')->where('user_id',USERID)->update(['password'=>md5($data['newPass'])]);
+		$update 			=	Model('BookUsers')->where('user_id',USERID)->update(['password'=>md5($data['newPass'])]);
 
 		if($update){
 			Session::delete('user_info');
@@ -325,7 +326,7 @@ class User extends Controller {
 			$id 	=	input('post.id');
 			// 检测是否为数字
 			if(!is_numeric($id)){
-				return json(['code'=>0,'msg'=>'请填写完整']);
+				return $this->error('id参数错误');
 			}
 		}
 
@@ -333,18 +334,18 @@ class User extends Controller {
 		$hasAddress 	=	Model('BookAddress')->get($id);
 
 		if(!$hasAddress){
-			return json(['code'=>0,'msg'=>'收货地址不存在']);
+			return $this->error('收货地址不存在');
 		}else{
 			$hasAddress 	=	$hasAddress->toArray();
 			// 如果收货地址已经是默认 终止
 			if($hasAddress['default'] == 1){
-				return json(['code'=>0,'msg'=>'已经是默认']);
+				return $this->error('已经是默认');
 			}
 		}
 
 		// 检测是否属于此用户
 		if($hasAddress['user_id'] != USERID){
-			return json(['code'=>0,'msg'=>'参数错误']);
+			return $this->error('系统错误');
 		}
 
 		// 检测此用户是否有默认收货地址 
@@ -359,16 +360,16 @@ class User extends Controller {
 			$elseAddress 	=	$elseAddress->toArray();
 			$updateElse 	=	Model('BookAddress')->where('address_id',$elseAddress['address_id'])->update(['default'=>0]);
 			if(!$updateElse){
-				return json(['code'=>0,'msg'=>'设置默认失败']);
+				return $this->error('设置默认失败');
 			}
 		}
 
 		// 开始设收货地址
 		$updateAddress 	=	Model('BookAddress')->where('address_id',$id)->update(['default'=>1]);
 		if(!$updateAddress){
-			return json(['code'=>0,'msg'=>'设置默认失败']);
+			return $this->error('设置默认失败');
 		}else{
-			return json(['code'=>1,'msg'=>'设置默认成功']);
+			return $this->success('设置默认成功');
 		}
 
 	}
@@ -380,7 +381,7 @@ class User extends Controller {
 			$id 	=	input('post.id');
 			// 检测是否为数字
 			if(!is_numeric($id)){
-				return json(['code'=>0,'msg'=>'参数错误']);
+				return $this->error('id参数错误');
 			}
 		}
 
@@ -389,21 +390,21 @@ class User extends Controller {
 		if($hasAddress){
 			$hasAddress 	=	$hasAddress->toArray();
 		}else{
-			return json(['code'=>0,'msg'=>'收货地址不存在']);
+			return $this->error('收货地址不存在');
 		}
 
 		// 检测是否属于此用户
 		if($hasAddress['user_id'] != USERID){
-			return json(['code'=>0,'msg'=>'参数错误']);
+			return $this->error('系统错误');
 		}
 
 		// 开始删除
 		$del 	= 	Model('BookAddress')->where('address_id',$id)->delete();
 
 		if($del){
-			return json(['code'=>1,'msg'=>'删除成功']);
+			return $this->success('删除成功');
 		}else{
-			return json(['code'=>0,'msg'=>'删除失败']);
+			return $this->success('删除失败');
 		}
 	}
 	/*

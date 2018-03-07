@@ -576,6 +576,17 @@ function getMeta($type='index',$id=0,$index='',$msg=''){
 			$description 	=	$pageArr['description'];
 		break;
 
+		case 'search':
+			// 获取转入的 msg
+			if($otherTitleType == 0){
+				$title 		=	$msg.'的搜索结果'.$webTitleLine.$webTitle;
+			}else{
+				$title 		=	$msg.'的搜索结果'.$webTitleLine.$webTitleDes.$webTitleLine.$webTitle;
+			}
+			$keywords 		=	$msg;
+			$description 	=	"{$msg}的搜索结果";
+		break;
+
 		default:
 			
 		break;

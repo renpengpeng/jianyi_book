@@ -12,6 +12,7 @@ class Setting extends Controller {
 		if(!Session::has('admin_id')){
 			$this->redirect(url('admin/login/index'));
 		}else{
+			// 把session储存到变量内
 			$adminSession 	=	Session('admin_id');
 
 			// 如果权限为 运营团队 禁止进入
@@ -46,8 +47,9 @@ class Setting extends Controller {
 	public function modify(){
 		$data 	=	input('post.');
 		if(!isset($data) || empty($data)){
-			return json(['code'=>0,'msg'=>'缺少必要参数']);
+			return $this->error('缺少必要的参数');
 		}else{
+			// html反转义
 			foreach ($data as $key => $value) {
 				$data[$key] 	=	htmlspecialchars($data[$key]);
 			}

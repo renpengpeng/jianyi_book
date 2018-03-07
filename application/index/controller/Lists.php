@@ -79,7 +79,6 @@ class Lists extends Controller {
 			// 获取下级分类
 			$nextID 		=	getCateNextAll($id);
 
-			// dump($nextID);exit;
 			if(!$nextID){
 				// 根据ID获取商品数据
 				$shopData 		=	Model('BookGoods')
@@ -145,9 +144,5 @@ class Lists extends Controller {
 			return view();
 		}
 	}
-	public function test(){
-		dump(getMeta('login','','',''));
-	}
-
 }
 ?>

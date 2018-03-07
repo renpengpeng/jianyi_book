@@ -94,7 +94,7 @@ class Login extends Controller {
 	public function reg_check(){
 		$data = input('post.');
 		if(!$data){
-			return json(['code'=>0,'msg'=>'请填写参数']);
+			return $this->error('参数不完整');
 		}
 
 		// 过滤参数
@@ -108,53 +108,44 @@ class Login extends Controller {
 		$findEmail		=	Model('BookUsers')->where('email',$data['email'])->find();
 
 		if($findUserName){
-			return json(['code'=>0,'msg'=>'用户名已经存在(英文)']);
-			exit;
-
+			return $this->error('用户名已经存在(英文)');
 		}
 		if($findBbsName){
-			return json(['code'=>0,'msg'=>'用户名已经存在(中文)']);
-			exit;
+			return $this->error('用户名已经存在(中文)');
 
 		}
 		if ($findEmail) {
-			return json(['code'=>0,'msg'=>'邮箱已经存在']);
-			exit;
+			return $this->error('邮箱已经存在');
 		}
 
 		// 判断长度
 		if(strlen($data['username']) > 20 || strlen($data['username']) < 3) {
-			return json(['code'=>0,'msg'=>'用户名(英文)长度不符']);
-			exit;
+			return $this->error('用户名(英文)长度不符');
 		}
 
 		if(!preg_match("/^[a-zA-Z0-9]+$/", $data['username'])){
-			return json(['code'=>'0','msg'=>'英文用户名只能为英文字母或者数字']);
+			return $this->error('英文用户名只能为英文字母或者数字');
 		}
 
 		if(mb_strlen($data['bbsname'] > 20) ||strlen($data['bbsname']) < 5) {
-			return json(['code'=>0,'msg'=>'用户名(中文)长度不符']);
-			exit;
+			return $this->error('用户名(中文)长度不符');
 
 		}
 
 		if($data['onePass'] != $data['twoPass']){
-			return json(['code'=>0,'msg'=>'第一次与第二次密码不相同']);
-			exit;
+			return $this->error('第一次与第二次密码不相同');
 		}
 
 		if(strlen($data['onePass']) < 5){
-			return json(['code'=>0,'msg'=>'密码长度过短']);
-			exit;
+			return $this->error('密码长度过短');
 		}
 
 		if(!preg_match("/^[a-zA-Z0-9]+$/", $data['onePass'])){
-			return json(['code'=>'0','msg'=>'密码只能为英文字母或者数字']);
+			return $this->error('密码只能为英文字母或者数字');
 		}
 
 		if($data['email-yzm'] != setcookie('email-yzm')){
-			return json(['code'=>0,'msg'=>'验证码错误']);
-
+			return $this->error('验证码错误');
 		}
 
 		// 开始组合数据并插入
@@ -169,9 +160,9 @@ class Login extends Controller {
 
 		$insert = Model('BookUsers')->insert($insertData);
 		if($insert){
-			return json(['code'=>1,'msg'=>'注册成功']);
+			return $this->success('注册成功');
 		}else{
-			return json(['code'=>0,'msg'=>'注册失败']);
+			return $this->error('注册失败');
 		}
 			
 	}
@@ -179,7 +170,7 @@ class Login extends Controller {
 	public function send_mail(){
 		$data = input('add');
 		if(!$data || empty($data)){
-			return json(['code'=>0,'msg'=>'请填写参数']);
+			return $this->error('参数不完整');
 		}else{
 			// 接受参数 赋值收件人
 			$add 			=	$data;
@@ -206,10 +197,10 @@ class Login extends Controller {
 		if($sendMailBeging){
 			// 设置cookie
 			Cookie::set('yzm',$safeNumber);
-			return json(['code'=>1,'msg'=>$safeNumber]);
+			return $this->success($safeNumber);
 			die();
 		}else{
-			return json(['code'=>0,'msg'=>'发送失败系统错误']);
+			return $this->error('发送失败系统错误');
 		}
 
 	}

@@ -24,7 +24,7 @@ class User extends Controller {
 		}
 	}
 	/*
-	``` 接收变量 $type  
+		接收变量 $type  
 			值： administer 为管理员  
 			值： 为空或者为user 为普通会员
 		接收变量 $status
@@ -36,11 +36,12 @@ class User extends Controller {
 	public function index($type = 'user' ,$status = 1,$page = 1){
 		// 判断状态
 		if(!is_numeric($status)){
-			return json(['code'=>0,'msg'=>'status必须为数字']);
+			// 跳转错误页面
+			$this->redirect('admin/index/cavaet',['msg'=>'status参数错误']);
 		}
 		if($status != 1){
 			if($status != 0){
-				return json(['code'=>0,'msg'=>'status必须为0或1']);
+				$this->redirect('admin/index/cavaet',['msg'=>'status参数错误']);
 			}
 		}
 
@@ -106,7 +107,7 @@ class User extends Controller {
 		}elseif($type == 'administer'){
 			$ctype = 'BookAdmins';
 		}else{
-			return json(['code'=>0,'msg'=>'type参数错误']);
+			$this->redirect('admin/index/cavaet',['msg'=>'type参数错误']);
 		}
 
 		// 开始获取信息
@@ -148,7 +149,7 @@ class User extends Controller {
 		}elseif($type == 'administer'){
 			$sqlTop 	=	'BookAdmins';
 		}else{
-			return json(['code'=>0,'msg'=>'未定义']);
+			$this->redirect('admin/index/cavaet',['msg'=>'定义错误的type']);
 		}
 
 		// 获取用户信息
@@ -202,9 +203,9 @@ class User extends Controller {
 				$update 	=	Model('BookUsers')->where('user_id',$id)->update($data);
 
 				if($update){
-					return json(['code'=>1,'修改成功']);
+					return $this->success('修改成功');
 				}else{
-					return json(['code'=>0,'修改失败']);
+					return $this->error('修改失败');
 				}
 
 			break;
@@ -221,7 +222,7 @@ class User extends Controller {
 						$findUsername 	=	$findUsername->toArray();
 						// 判断id
 						if($data['id'] != $findUsername['admin_id']){
-							return json(['code'=>0,'msg'=>'用户名已经存在']);
+							return $this->error('用户名已经存在');
 						}
 					}
 
@@ -242,7 +243,7 @@ class User extends Controller {
 					$id 	=	$data['id'];
 					unset($data['id']);
 				}else{
-					return json(['code'=>0,'msg'=>'缺少必要参数ID']);
+					return $this->error('缺少必要id参数');
 				}
 
 				// 遍历 空值删除
@@ -260,15 +261,15 @@ class User extends Controller {
 					if($id == Session('admin_id')['admin_id']){
 						Session('admin_id',null);
 					}
-					return json(['code'=>1,'msg'=>'修改成功']);
+					return $this->success('修改成功');
 				}else{
-					return json(['code'=>0,'msg'=>'修改失败，可能是未作修改']);
+					return $this->error('修改失败，可能是未作修改');
 				}
 
 			break;
 			// type 错误则参数错误
 			default:
-				return json(['code'=>0,'msg'=>'参数错误']);
+				return $this->error('参数错误');
 			break;
 		}
 	}
@@ -287,7 +288,7 @@ class User extends Controller {
 		}else if($type == 'administer'){
 			$lastStatusArr = Model('BookAdmins')->get($id)->toArray();
 		}else{
-			return json(['code'=>0,'msg'=>'type参数错误']);
+			return $this->error('type参数错误');
 		}
 
 		$lastStatus = $lastStatusArr['status'];
@@ -304,7 +305,7 @@ class User extends Controller {
 		}elseif($type == 'administer'){
 			$update = Model('BookAdmins')->where('admin_id',$id)->update(['status'=>$newStatus]);
 		}else{
-			return json(['code'=>0,'msg'=>'更新时遇到type参数错误']);
+			return $this->error('更新时遇到type参数错误');
 		}
 
 		// 判断状态
@@ -315,9 +316,9 @@ class User extends Controller {
 					Session('admin_id',null);
 				}
 			}
-			return json(['code'=>1,'msg'=>'更新状态成功']);
+			return $this->success('更新状态成功');
 		}else{
-			return json(['code'=>0,'msg'=>'更新状态失败']);
+			return $this->error('更新状态失败');
 		}
 	}
 }

@@ -10,6 +10,7 @@ class Index extends Controller
         // 获取公共 参数
         $commonData     =   getCommonData();
 
+        // 赋值公共参数
         $this->assign('commonData',$commonData);
     }
     public function index()
@@ -70,7 +71,7 @@ class Index extends Controller
     			$titleArr 					=	Model('BookCates')->get($floorIDArr[$i]);
     		}
     		
-
+            // 增加参数
     		if($titleArr){
     			$titleArr 	=	$titleArr->toArray();
     			$title 		=	$titleArr['cate_name'];

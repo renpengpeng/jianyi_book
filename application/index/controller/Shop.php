@@ -85,6 +85,7 @@ class Shop extends Controller {
 				$comment[$key]['content'] 		=	htmlspecialchars_decode($comment[$key]['content']);
 				// 查询会员昵称 与头像
 				$nickname 	=	Model('BookUsers')->get($comment[$key]['user_id']);
+				// 赋值会员昵称 头像
 				if($nickname){
 					$nickname 	=	$nickname->toArray();
 					$comment[$key]['nickname'] 	=	$nickname['bbsname'];
@@ -150,7 +151,7 @@ class Shop extends Controller {
 	public function add_cart(){
 
 		if(!input('?post.userid') || !input('?post.shopid') || !input('?post.num')){
-			return json(['code'=>0,'msg'=>'非法的参数']);
+			return $this->error('非法的参数')
 		}else{
 			$userid 	=	input('userid');
 			$shopid 	=	input('shopid');
@@ -163,16 +164,16 @@ class Shop extends Controller {
 			$hasUser 	=	$hasUser->toArray();
 			// 判断是否被锁定
 			if($hasUser['status'] == 0){
-				return json(['code'=>0,'msg'=>'用户被锁定 暂时不能加入购物车']);
+				return $this->error('用户已经被锁定不支持添加购物车');
 			}
 		}else{
-			return json(['code'=>0,'msg'=>'用户不存在']);
+			return $this->error('用户不存在');
 		}
 
 		// 查询商品数量
 		$hasShop 		=	Model('BookGoods')->get($shopid);
 		if(!$hasShop){
-			return json(['code'=>0,'msg'=>'商品不存在']);
+			return $this->error('商品不存在');
 		}
 
 		// 判断是否有此商品如果有此商品 购物车内数量+1
@@ -185,9 +186,9 @@ class Shop extends Controller {
 		if($hasCart){
 			$addCart 	=	Model('BookCarts')->where(['user_id' 	=> 	$userid,'good_id' 	=> 	$shopid])->setInc('good_num');
 			if($addCart){
-				return json(['code'=>1,'msg'=>'添加购物车成功']);
+				return $this->success('添加购物车成功');
 			}else{
-				return json(['code'=>0,'msg'=>'添加购物车失败']);
+				return $this->error('添加购物车失败');
 			}
 
 
@@ -205,9 +206,9 @@ class Shop extends Controller {
 		$beginAdd 		=	Model('BookCarts')->insert($addData);
 
 		if($beginAdd){
-			return json(['code'=>1,'msg'=>'添加购物车成功']);
+			return $this->success('添加购物车成功');
 		}else{
-			return json(['code'=>0,'msg'=>'添加购物车失败']);
+			return $this->error('添加购物车失败');
 		}
 
 	}

@@ -122,7 +122,7 @@ class Commodity extends Controller{
 	public function upload_pic(){
 		$file				=	request()->file('myfile');
 		if(empty($file)){
-			return json(['code'=>0,'msg'=>'参数缺少']);
+			return $this->error('缺少必要参数');
 		}
 
 		// 获取系统参数
@@ -156,7 +156,7 @@ class Commodity extends Controller{
 					'msg'	=>	$fileCompletePath,
 				]);
 			}else{
-				return json(['code'=>0,'上传失败']);
+				return $this->error('上传失败');
 			}
 	}
 	/*
