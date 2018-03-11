@@ -14,29 +14,38 @@
 				<th>购买数量</th>
 				<th>操作</th>
 			<tr>
-			{volist name="cartData" id="cart"}
-			<tr>
-				<!-- <td>
-					{$cart.numbering}
-				</td> -->
-				<td>
-					{$cart.shop_title}
-				</td>
-				<td>
-					<img src="{$cart.pic}" width="50" height="50">
-				</td>
-				<td>
-					<div class="form-inline">
-						<button class="btn btn-sm btn-default" onclick="cartShopNum('-',this)">-</button>
-						<input type="text" name="shop_buy_num" value="{$cart.good_num}" class="form-control" style="width: 50px;">
-						<button class="btn btn-sm btn-default" onclick="cartShopNum('+',this)">+</button>
-					</div>
-				</td>
-				<td>
-					<button class="btn btn-sm btn-success" onclick="shoppingCart({$cart.cart_id},this)">立即购买</button>
-					<button class="btn btn-sm btn-danger" onclick="cartDel({$cart.cart_id},this)" src="{:url('index/user/cart_del')}">删除</button>
-				</td>
-			</tr>
+			{volist name="cartData" id="cartData"}
+				<!-- 判断失效信息 -->
+				{if $cartData.has eq 0 }
+				<tr>
+					<td><del>商品失效</del></td>
+					<td><del>商品失效</del></td>
+					<td><del>商品失效</del></td>
+					<td>
+						<button class="btn btn-sm btn-danger" onclick="cartDel({$cartData.cart_id},this)" src="{:url('index/user/cart_del')}">删除</button>
+					</td>
+				</tr>
+				{else /}
+					<tr>
+						<td>
+							{$cartData.shop_title}
+						</td>
+						<td>
+							<img src="{$cartData.pic}" width="50" height="50">
+						</td>
+						<td>
+							<div class="form-inline">
+								<button class="btn btn-sm btn-default" onclick="cartShopNum('-',this)">-</button>
+								<input type="text" name="shop_buy_num" value="{$cartData.good_num}" class="form-control" style="width: 50px;">
+								<button class="btn btn-sm btn-default" onclick="cartShopNum('+',this)">+</button>
+							</div>
+						</td>
+						<td>
+							<button class="btn btn-sm btn-success" onclick="shoppingCart({$cartData.cart_id},this)">立即购买</button>
+							<button class="btn btn-sm btn-danger" onclick="cartDel({$cartData.cart_id},this)" src="{:url('index/user/cart_del')}">删除</button>
+						</td>
+					</tr>
+				{/if}
 			{/volist}
 		</table>
 	</div>

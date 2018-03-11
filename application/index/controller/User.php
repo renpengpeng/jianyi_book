@@ -173,6 +173,8 @@ class User extends Controller {
 					$shopData[$key]['shop_title'] 	=	$findShop['title'];
 					// 添加商品图片
 					$shopData[$key]['pic'] 			=	$findShop['main_img'];
+					// 添加商品失效信息
+					$shopData[$key]['has']  		=	1;
 				}else{
 					// 添加商品失效信息
 					$shopData[$key]['has'] 	=	0;
